@@ -702,7 +702,7 @@ $j(document).ready(function(){
     $j("#cross-red").attr('src', pageContextAddress + '/moduleResources/haitimobileclinic/images/reload-arrow.png');
     $j('#cross-red').click(function(event){
         alertUserAboutLeaving = false;
-        window.location.href=pageContextAddress + '/module/haitimobileclinic/workflow/primaryCareVisitTask.form';
+        window.location.href=pageContextAddress + '/module/haitimobileclinic/workflow/mobileClinicReceptionTask.form';
     });
 
 //    if(createNew !== 'true' ){

@@ -1082,7 +1082,7 @@ $j(document).ready(function(){
 	$j.registerPatient= function(isPrinting){
 		console.log("registerPatient: isPrinting=" + isPrinting);
 		alertUserAboutLeaving = false;
-		if(isPrinting == "yes"){
+//		if(isPrinting == "yes"){
 		if (false) {
 			$j.hideAllDiv();											
 			$j("#"+nextDiv).css("visibility", "visible");

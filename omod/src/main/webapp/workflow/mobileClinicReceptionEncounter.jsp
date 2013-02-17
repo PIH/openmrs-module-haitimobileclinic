@@ -67,7 +67,7 @@
             </td>
         </tr>
         <tr>
-            <td class="menu" id="tbScreeningMenu">${!empty tbScreening.label ? tbScreening.label : tbScreening.concept.name}</td>
+            <td class="menu" id="tbScreeningMenu"><spring:message code="haitimobileclinic.tbScreening"/></td>
         </tr>
         <!-- DISPLAY LABEL FOR CONFIRMATION PAGE -->
         <tr>

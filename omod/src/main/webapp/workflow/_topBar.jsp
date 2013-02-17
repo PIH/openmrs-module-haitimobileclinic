@@ -29,6 +29,30 @@
 			</table>			
 		</div>	
 	</c:when>	
+	<c:when test="${currentTask == 'mobileClinic'}">
+		<div class="partBar topBar">			
+			<table style="width:95%; height:100%; margin-bottom: auto; margin-right: auto;">
+				<tr class="whiteColor smallerFont">
+					<td style="width:30%; padding: 0px 20px 0px 20px;">
+						<spring:message code="haitimobileclinic.tasks.patientRegistration"/>
+						<c:if test="${taskProgress.completedTasks['registrationTask'] ==1}">
+							<img id="registrationCompleteImg" src="${pageContext.request.contextPath}/moduleResources/haitimobileclinic/images/checkmark-green.png">
+						</c:if>
+					</td>					
+					<td style="width:30%; text-align: right; padding: 0px 40px 0px 0px;">
+						<spring:message code="haitimobileclinic.tasks.mobileClinicReception"/>
+						<c:if test="${taskProgress.completedTasks['mobileClinicReception'] ==1}">
+							<img id="primaryCareVisitCompleteImg" src="${pageContext.request.contextPath}/moduleResources/haitimobileclinic/images/checkmark-green.png">
+						</c:if>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="height:36px; width:100%; float:center; background : url('${pageContext.request.contextPath}/moduleResources/haitimobileclinic/images/${taskProgress.progressBarImage}') center center no-repeat;">					
+					</td>
+				</tr>
+			</table>			
+		</div>	
+	</c:when>	
 	<c:otherwise>
 		<div class="partBar topBar">
 			<c:if test="${!empty patient}">

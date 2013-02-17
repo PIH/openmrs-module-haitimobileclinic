@@ -52,4 +52,25 @@ public class PatientRegistrationTaskController extends AbstractPatientDetailsCon
 		model.put("nextTask", "primaryCareReceptionEncounter.form");	
 		return new ModelAndView("/module/haitimobileclinic/workflow/patientRegistrationTask");
 	}
+	
+	@RequestMapping(value = "/module/haitimobileclinic/workflow/mobileClinicTask.form", method = RequestMethod.GET)
+	public ModelAndView mobileClinicTask(HttpSession session,  ModelMap model) {
+		
+		// confirm that we have an active session
+		if (!HaitiMobileClinicWebUtil.confirmActiveHaitiMobileClinicSession(session)) {
+			return new ModelAndView(HaitiMobileClinicConstants.WORKFLOW_FIRST_PAGE);
+		}
+		UserActivityLogger.logActivity(session, HaitiMobileClinicConstants.ACTIVITY_REGISTRATION_INITIATED);
+				
+		// reset the workflow because we are starting a new session
+		HaitiMobileClinicWebUtil.resetHaitiMobileClinicWorkflow(session);
+		
+		TaskProgress taskProgress = new TaskProgress();
+		taskProgress.setProgressBarImage(HaitiMobileClinicConstants.RETROSPECTIVE_PROGRESS_1_IMG);				
+		HaitiMobileClinicWebUtil.setTaskProgress(session, taskProgress);
+		model.addAttribute("taskProgress", taskProgress);
+		
+		model.put("nextTask", "mobileClinicReceptionEncounter.form");	
+		return new ModelAndView("/module/haitimobileclinic/workflow/patientRegistrationTask");
+	}
 }

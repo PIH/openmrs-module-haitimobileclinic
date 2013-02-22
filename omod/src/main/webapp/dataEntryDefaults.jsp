@@ -3,7 +3,8 @@
 	redirect="/module/haitimobileclinic/dataEntryDefaults.htm" />
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
-<openmrs:htmlInclude file="/moduleResources/addresshierarchy/addressHierarchy.js" />
+<openmrs:htmlInclude
+	file="/moduleResources/addresshierarchy/addressHierarchy.js" />
 
 <script type="text/javascript">
 	var $j = jQuery;
@@ -14,25 +15,22 @@
 	var other = "Other";
 	var allowFreetext = true;
 
-	$j(document)
-			.ready(
-					function() {
+	$j(document).ready(function() {
 
-						// initialize all the address field (if necessary) by updating the options in the relevant select list
-						// note that we need to reference the select lists by name (as opposed to class) because there may be multiple
-						// instances of the address portlet (and therefore multiple addresses) on a single page
-						// note that we build the search string for each hierarchy level by concatenating the values of the previous levels
+		// initialize all the address field (if necessary) by updating the options in the relevant select list
+		// note that we need to reference the select lists by name (as opposed to class) because there may be multiple
+		// instances of the address portlet (and therefore multiple addresses) on a single page
+		// note that we build the search string for each hierarchy level by concatenating the values of the previous levels
 
-						// value for the selection list is the current value for the field (if one exist), otherwise the default value (if one exists)
-						// only display selection this for list level if a) the previous level in the hierarchy has a value, b) the level itself has a value, or c) this is the top level in the hierarchy
-						updateOptions($j('select[name=country]'), "", "Haiti"); // use double quotes here so as not conflict with ' in location names			
+		// value for the selection list is the current value for the field (if one exist), otherwise the default value (if one exists)
+		// only display selection this for list level if a) the previous level in the hierarchy has a value, b) the level itself has a value, or c) this is the top level in the hierarchy
+		updateOptions($j('select[name=country]'), "", "Haiti"); // use double quotes here so as not conflict with ' in location names			
 
-						// value for the selection list is the current value for the field (if one exist), otherwise the default value (if one exists)
-						// only display selection this for list level if a) the previous level in the hierarchy has a value, b) the level itself has a value, or c) this is the top level in the hierarchy
-						updateOptions($j('select[name=stateProvince]'),
-								"Haiti|", ""); // use double quotes here so as not conflict with ' in location names			
+		// value for the selection list is the current value for the field (if one exist), otherwise the default value (if one exists)
+		// only display selection this for list level if a) the previous level in the hierarchy has a value, b) the level itself has a value, or c) this is the top level in the hierarchy
+		updateOptions($j('select[name=stateProvince]'), "Haiti|", ""); // use double quotes here so as not conflict with ' in location names			
 
-					});
+	});
 </script>
 
 ${message}
@@ -102,14 +100,21 @@ ${message}
 				id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
 		</tr>
 		<tr>
-			<td>CHW names (comma separated):</td>
-			<td><input type="text" name="sessionChwNames"
-				id="sessionChwNames" size="25" value="${sessionChwNames}" /></td>
+			<td>CHW names:</td>
+			<td>
+			<input type="text" name="sessionChwName1"
+				id="sessionChwName1" size="25" value="${sessionChwName1}" />
+				 <input
+				type="text" name="sessionChwName2" id="sessionChwName2" size="25"
+				value="${sessionChwName2}" /> 
+				<input type="text"
+				name="sessionChwName3" id="sessionChwName3" size="25"
+				value="${sessionChwName3}" /></td>
 		</tr>
 		<tr>
 			<td>NEC name:</td>
-			<td><input type="text" name="sessionNecName"
-				id="sessionNecName" size="25" value="${sessionNecName}" /></td>
+			<td><input type="text" name="sessionNecName" id="sessionNecName"
+				size="25" value="${sessionNecName}" /></td>
 		</tr>
 		<tr />
 		<tr />

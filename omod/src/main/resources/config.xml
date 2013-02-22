@@ -42,6 +42,17 @@
 		<class>org.openmrs.module.haitimobileclinic.extension.html.HaitiMobileClinicExt</class>
 	</extension>
 	
+	<extension>
+	      <point>org.openmrs.patientDashboard.overviewBox</point>
+	    <class>org.openmrs.module.haitimobileclinic.extension.html.HtmlFormAccessBoxExt</class>
+	</extension>
+	
+	<extension>
+		<point>org.openmrs.headerFullIncludeExt</point>
+		<class>@MODULE_PACKAGE@.extension.html.HidePatientHeaderRowFullExt</class>
+	</extension>
+	
+	
 	<!-- Privileges -->
 	<privilege>
 		<name>Patient Registration Task - haitiMobileClinic</name>

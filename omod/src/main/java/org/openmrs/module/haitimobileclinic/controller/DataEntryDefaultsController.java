@@ -30,7 +30,9 @@ public class DataEntryDefaultsController {
 			@RequestParam(required = false) String address3,
 			@RequestParam(required = false) String address1,
 			@RequestParam String sessionCoordinates,
-			@RequestParam String sessionChwNames,
+			@RequestParam String sessionChwName1,
+			@RequestParam String sessionChwName2,
+			@RequestParam String sessionChwName3,
 			@RequestParam String sessionNecName, 
 			ModelMap model) {
 		// take form values and store into session
@@ -38,7 +40,9 @@ public class DataEntryDefaultsController {
 		model.addAttribute("sessionLocation", country + "|" + stateProvince
 				+ "|" + cityVillage + "|" + address3 + "|" + address1);
 		model.addAttribute("sessionCoordinates", sessionCoordinates);
-		model.addAttribute("sessionChwNames", sessionChwNames);
+		model.addAttribute("sessionChwName1", sessionChwName1);
+		model.addAttribute("sessionChwName2", sessionChwName2);
+		model.addAttribute("sessionChwName3", sessionChwName3);
 		model.addAttribute("sessionNecName", sessionNecName);
 		model.addAttribute("message",
 				"Default Data Entry Values Successfully Set.");

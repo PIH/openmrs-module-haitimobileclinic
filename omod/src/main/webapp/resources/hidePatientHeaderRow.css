@@ -1,5 +1,9 @@
- #patientHeaderObs { display: none }
+#patientHeaderObs { display: none }
  
- #patientSubheader { display: none }
+#patientSubheader { display: none }
  
- .patientLastEncounterTable { display: none }
+.patientLastEncounterTable { display: none }
+
+#patientRelationshipsBoxHeader { display: none }
+
+#patientRelationshipsBox { display: none }

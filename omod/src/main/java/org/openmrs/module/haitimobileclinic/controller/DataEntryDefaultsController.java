@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 @SessionAttributes({ "sessionDate", "sessionLocation", "sessionCoordinates",
-		"sessionChwNames", "sessionNecName" })
+	"sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
 @Controller
 public class DataEntryDefaultsController {
 
 	protected final Log log = LogFactory.getLog(getClass());
-
-	@RequestMapping(value = "/module/haitimobileclinic/dataEntryDefaults.form", method = RequestMethod.GET)
-	public ModelAndView viewDataEntryDefaults(ModelAndView mav) {
-		return mav;
-	}
 
 	@RequestMapping(value = "/module/haitimobileclinic/dataEntryDefaults.form", method = RequestMethod.POST)
 	public String setDataEntryDefaults(@RequestParam String sessionDate,
@@ -37,7 +32,7 @@ public class DataEntryDefaultsController {
 			ModelMap model) {
 		// take form values and store into session
 		model.addAttribute("sessionDate", sessionDate);
-		model.addAttribute("sessionLocation", country + "|" + stateProvince
+		model.addAttribute("sessionLocation", stateProvince
 				+ "|" + cityVillage + "|" + address3 + "|" + address1);
 		model.addAttribute("sessionCoordinates", sessionCoordinates);
 		model.addAttribute("sessionChwName1", sessionChwName1);

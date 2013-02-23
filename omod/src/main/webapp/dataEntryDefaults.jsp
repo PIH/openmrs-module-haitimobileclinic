@@ -34,15 +34,15 @@
 </script>
 
 ${message}
-<a href="/openmrs">Go to back to Home</a>
-<form method="post" action="dataEntryDefaults.form"
-	style="padding: 50px; width: 600px;">
+
+<form method="post" action="dataEntryDefaults.form">
 	<table>
 		<tr>
 			<td>Date:</td>
 			<td><input type="text" name="sessionDate" id="sessionDate"
 				size="11" value="${sessionDate}" onfocus="showCalendar(this,60)"
 				onChange="clearError('sessionDate')" /></td>
+		</tr>
 		<tr>
 			<td>Clinic Location:</td>
 			<td>

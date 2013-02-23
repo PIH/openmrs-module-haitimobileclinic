@@ -17,35 +17,24 @@ import org.openmrs.module.web.extension.BoxExt;
 
 public class HtmlFormAccessBoxExt extends BoxExt {
 
-	/**
-	 * @see BoxExt#getRequiredPrivilege()
-	 */
 	@Override
 	public String getRequiredPrivilege() {
 		return "View Patients";
 	}
 
-	/**
-	 * @see BoxExt#getPortletUrl()
-	 */
 	@Override
 	public String getPortletUrl() {
 		return "htmlFormAccess";
 	}
 
-	/**
-	 * @see BoxExt#getTitle()
-	 */
 	@Override
 	public String getTitle() {
 		return "haitimobileclinic.htmlFormAccessTitle";
 	}
 
-	/**
-	 * @see BoxExt#getContent()
-	 */
 	@Override
 	public String getContent() {
-		return "haitimobileclinic.sectionContent";
+		return null;
 	}
+
 }

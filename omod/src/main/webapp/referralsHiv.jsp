@@ -50,8 +50,6 @@
 							    	  }
 							      });
 							});
-							
-								
 							--></script>
 							</script>
 								<c:set var="referralEncounterId">
@@ -60,11 +58,11 @@
 								<tbody>
 									<tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
 										<td><referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/> - <referrals:patientName patientId="${patientId}" /></td>
-										<td><referrals:site patientId="${patientId}" /></td>
-										<td><referrals:referralReason patientId="${patientId}" /></td>
+										<td><referrals:site referralEncounterId="${referralEncounterId}" /></td>
+										<td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:chwNames referralEncounterId="${referralEncounterId}"/></td>
-										<td><referrals:necName patientId="${patientId}" /></td>
-										<td><referrals:mobileVisitDate patientId="${patientId}" /></td>
+										<td><referrals:necName referralEncounterId="${referralEncounterId}" /></td>
+										<td><referrals:mobileVisitDate referralEncounterId="${referralEncounterId}" /></td>
 										<td>
 											<form method="post" action="dataEntryDefaults.form">
 												<input type="text" name="staticVisitDate" id="staticVisitDate-${patientId}" size="11" onfocus="showCalendar(this,60)" onChange="clearError('staticVisitDate-${patientId}');" /> 

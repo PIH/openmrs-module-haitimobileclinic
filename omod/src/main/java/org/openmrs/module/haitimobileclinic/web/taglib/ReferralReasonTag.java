@@ -1,61 +1,77 @@
 package org.openmrs.module.haitimobileclinic.web.taglib;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.jfree.util.Log;
-import org.openmrs.Patient;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
+import org.openmrs.Encounter;
+import org.openmrs.Obs;
+import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 
 public class ReferralReasonTag extends TagSupport {
 
 	private static final long serialVersionUID = 4201389937632339892L;
 
-	private Integer patientId = null;
-	
-	public Integer getPatientId() {
-		return patientId;
+	protected final Log log = LogFactory.getLog(getClass());
+
+	private String referralEncounterId = null;
+
+	public String getReferralEncounterId() {
+		return referralEncounterId;
 	}
 
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
-	}
-
-
-	public ReferralReasonTag() {
-		// TODO Auto-generated constructor stub
+	public void setReferralEncounterId(String encounterId) {
+		this.referralEncounterId = encounterId;
 	}
 
 	public int doStartTag() throws JspException {
-		
 		JspWriter o = pageContext.getOut();
 		try {
-			Patient p = Context.getPatientService().getPatient(getPatientId());
-			if (p == null) {
-				o.write("(not found)");
+			if (!"".equals(getReferralEncounterId())) {
+				Integer encounterId = Integer
+						.parseInt(getReferralEncounterId());
+				Encounter e = Context.getEncounterService().getEncounter(
+						encounterId);
+				Iterator<Obs> obses = getObsesFromEncounter(e, Arrays.asList(Context.getConceptService().getConcept(6760))).iterator();
+				while (obses.hasNext()) {
+					Obs obs = (Obs) obses.next();
+					o.write(obs.getValueText() + (obses.hasNext() ? "; " : ""));
+				}
 			} else {
-				o.write(p.getFamilyName() + ", " + p.getGivenName());
+				o.write("(none provided)");
 			}
-
 		} catch (Exception e) {
-			Log.error(e);
+			log.error(e);
 			try {
 				o.write("(error: " + e.getMessage());
 			} catch (IOException e1) {
 			}
 		}
-		
+
 		// reset the objects to null because taglibs are reused
 		release();
-		
+
 		return SKIP_BODY;
 	}
-	
+
+	private List<Obs> getObsesFromEncounter(Encounter e, List<Concept> questions) {
+		return Context.getObsService().getObservations(
+				Arrays.asList((Person) e.getPatient()),
+				Arrays.asList(e), questions, null, null,
+				null, null, null, null, null, null, false);
+	}
+
 	public int doEndTag() {
-		patientId = null;
+		referralEncounterId = null;
 		return EVAL_PAGE;
 	}
 }

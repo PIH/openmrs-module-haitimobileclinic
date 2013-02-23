@@ -52,7 +52,7 @@ public class ReferralEncounterIdTag extends TagSupport {
 			Date fromDate = null;
 			Date toDate = null;
 			EncounterType consultation = Context.getEncounterService()
-					.getEncounterType(18); // mobile clinic reception
+					.getEncounterType(19); // mobile clinic consultation
 			Location location = Context.getLocationService().getLocation(
 					Context.getAdministrationService().getGlobalProperty(
 							"default_location"));

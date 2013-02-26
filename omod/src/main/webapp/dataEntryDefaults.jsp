@@ -38,7 +38,7 @@ ${message}
 <form method="post" action="dataEntryDefaults.form">
 	<table>
 		<tr>
-			<td>Date:</td>
+			<td>Clinic Date:</td>
 			<td><input type="text" name="sessionDate" id="sessionDate"
 				size="11" value="${sessionDate}" onfocus="showCalendar(this,60)"
 				onChange="clearError('sessionDate')" /></td>
@@ -57,7 +57,7 @@ ${message}
 							class="other" /></td>
 					</tr>
 					<tr>
-						<td>Départment</td>
+						<td>Department</td>
 						<td><select style="display: none" name="stateProvince"
 							class="stateProvince"
 							onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.cityVillage'));" />
@@ -98,6 +98,15 @@ ${message}
 			<td>GPS coordinates:</td>c
 			<td><input type="text" name="sessionCoordinates"
 				id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
+		</tr>
+		<tr>
+			<td>Static clinic (unchangeable):</td>c
+			<td>
+				<input type="text" name="sessionStaticLocationName" readonly
+					id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
+				<input type="hidden" name="sessionStaticLocation"
+					id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
+			</td>
 		</tr>
 		<tr>
 			<td>CHW names:</td>

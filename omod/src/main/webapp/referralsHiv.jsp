@@ -14,8 +14,6 @@ function enrollHiv(fieldToUpdate, referralEncounter, enrollmentDate) {
 		  		}
 		);
 	}
-
-
 </script>
 
 <div id="findPatient" class="portlet">
@@ -23,15 +21,16 @@ function enrollHiv(fieldToUpdate, referralEncounter, enrollmentDate) {
 		<b class="boxHeader">Enroll patients</b>
 		<div class="box">
 			<div class="searchWidgetContainer" id="referrals">
+			<!-- 
 			<span> 
-					<form method="get" action="filterReferrals.form">
-			Location: ${sessionStaticLocationName}	
-			Mobile visit between: <input type="text" name="fromDate" id="fromDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('fromDate')" />
-			and: <input type="text" name="toDate" id="toDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('toDate')" />
-			<input type="submit" value="Filter"/>
-		</form>
+				<form method="get" action="filterReferrals.form">
+					Location: ${sessionStaticLocationName}	
+					Mobile visit between: <input type="text" name="fromDate" id="fromDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('fromDate')" />
+					and: <input type="text" name="toDate" id="toDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('toDate')" />
+					<input type="submit" value="Filter"/>
+				</form>
 			</span>
-			
+			-->			
 			<span class="openmrsSearchDiv" style="display: inline;">
 					<div id="openmrsSearchTable_wrapper" class="dataTables_wrapper">
 						<table id="openmrsSearchTable" cellspacing="0" cellpadding="2"
@@ -40,7 +39,7 @@ function enrollHiv(fieldToUpdate, referralEncounter, enrollmentDate) {
 								<tr>
 									<th>Name</th>
 									<th>Site</th>
-									<th>Reason for referral</th>
+									<!-- <th>Reason for referral</th> -->
 									<th>CHW names</th>
 									<th>NEC name</th>
 									<th>Mobile Visit date</th>
@@ -67,7 +66,7 @@ function enrollHiv(fieldToUpdate, referralEncounter, enrollmentDate) {
 									<tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
 										<td><referrals:patientName patientId="${patientId}" /></td>
 										<td><referrals:site referralEncounterId="${referralEncounterId}" /></td>
-										<td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td>
+										<!-- <td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td> -->
 										<td><referrals:chwNames referralEncounterId="${referralEncounterId}"/></td>
 										<td><referrals:necName referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${referralEncounterId}" /></td>

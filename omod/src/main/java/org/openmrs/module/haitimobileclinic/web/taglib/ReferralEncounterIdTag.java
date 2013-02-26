@@ -19,6 +19,8 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
+import org.openmrs.util.OpenmrsConstants;
 
 public class ReferralEncounterIdTag extends TagSupport {
 
@@ -52,16 +54,14 @@ public class ReferralEncounterIdTag extends TagSupport {
 			Date fromDate = null;
 			Date toDate = null;
 			EncounterType consultation = Context.getEncounterService()
-					.getEncounterType(19); // mobile clinic consultation
-			Location location = Context.getLocationService().getLocation(
-					Context.getAdministrationService().getGlobalProperty(
-							"default_location"));
+					.getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION);
+			Location location = Context.getLocationService().getLocation(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME));
 			Patient patient = Context.getPatientService().getPatient(
 					getPatientId());
-			Concept question = Context.getConceptService().getConcept(6760);
+			Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
 			Concept answer = null;
 			if ("hiv".equals(referralType)) {
-				answer = Context.getConceptService().getConcept(6751);
+				answer = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
 			}
 			List<Encounter> encounters = Context.getEncounterService()
 					.getEncounters(patient, location, fromDate, toDate, null,

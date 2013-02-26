@@ -11,12 +11,7 @@
 			<div class="searchWidgetContainer" id="referrals">
 			<span> 
 					<form method="get" action="filterReferrals.form">
-			Location: <select name="location">
- 				<option value="belladeres">Belladeres</option>
-				<option value="cercalasource">Cerca La Source</option>
-				<option value="petiteriviere">Petite Riviere</option>
-				<option value="verrettes">Verrettes</option>
-			</select>	
+			Location: ${sessionStaticLocationName}	
 			Mobile visit between: <input type="text" name="fromDate" id="fromDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('fromDate')" />
 			and: <input type="text" name="toDate" id="toDate" size="11" onfocus="showCalendar(this,60)" onChange="clearError('toDate')" />
 			<input type="submit" value="Filter"/>
@@ -39,7 +34,7 @@
 								</tr>
 							</thead>
 							<c:forEach var="patientId" items="${memberIds}" varStatus="loopStatus">
-							<script type="text/javascript"><!--
+							<script type="text/javascript">
 							$j(function() {
 								$j('#enroll-${patientId}').hide();
 							      $j('#staticVisitDate-${patientId}').change(function() {
@@ -50,14 +45,14 @@
 							    	  }
 							      });
 							});
-							--></script>
+							</script>
 							</script>
 								<c:set var="referralEncounterId">
 									<referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/>
 								</c:set>
 								<tbody>
 									<tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-										<td><referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/> - <referrals:patientName patientId="${patientId}" /></td>
+										<td><referrals:patientName patientId="${patientId}" /> (<referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/>)</td>
 										<td><referrals:site referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:chwNames referralEncounterId="${referralEncounterId}"/></td>

@@ -37,7 +37,7 @@ public class PatientNameTag extends TagSupport {
 			if (p == null) {
 				o.write("(not found)");
 			} else {
-				o.write(p.getFamilyName() + ", " + p.getGivenName());
+				o.write("<a href='/patientDashboard.form?patientId=" + p.getPatientId() + "'>" + p.getFamilyName() + ", " + p.getGivenName() + "</a>");
 			}
 
 		} catch (Exception e) {

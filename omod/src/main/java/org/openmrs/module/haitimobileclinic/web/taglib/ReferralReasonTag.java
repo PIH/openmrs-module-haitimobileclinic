@@ -44,7 +44,7 @@ public class ReferralReasonTag extends TagSupport {
 				Iterator<Obs> obses = getObsesFromEncounter(e, Arrays.asList(Context.getConceptService().getConcept(6760))).iterator();
 				while (obses.hasNext()) {
 					Obs obs = (Obs) obses.next();
-					o.write(obs.getValueText() + (obses.hasNext() ? "; " : ""));
+					o.write(obs.getValueCoded().getName().getName() + (obses.hasNext() ? "; " : ""));
 				}
 			} else {
 				o.write("(none provided)");

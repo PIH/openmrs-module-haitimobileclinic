@@ -1,8 +1,22 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
-
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
+
+<script>
+function enrollHiv(fieldToUpdate, referralEncounter, enrollmentDate) {	
+	$j.post(
+			 '/openmrs/module/haitimobileclinic/enrollHiv.form',
+			 { 'referralEncounterId': referralEncounter, 'enrollmentDate': enrollmentDate },
+			 function (data) {
+						fieldToUpdate.empty();
+						fieldToUpdate.html(data);
+		  		}
+		);
+	}
+
+
+</script>
 
 <div id="findPatient" class="portlet">
 	<div>
@@ -34,44 +48,42 @@
 								</tr>
 							</thead>
 							<c:forEach var="patientId" items="${memberIds}" varStatus="loopStatus">
-							<script type="text/javascript">
-							$j(function() {
-								$j('#enroll-${patientId}').hide();
-							      $j('#staticVisitDate-${patientId}').change(function() {
-							    	  if ($j('#staticVisitDate-${patientId}').val()) {
-								            $j('#enroll-${patientId}').show();
-							    	  } else {
-								            $j('#enroll-${patientId}').hide();
-							    	  }
-							      });
-							});
-							</script>
-							</script>
+								<script type="text/javascript">
+									$j(function() {
+										$j('#enroll-${patientId}').hide();
+									    $j('#staticVisitDate-${patientId}').change(function() {
+									    	  if ($j('#staticVisitDate-${patientId}').val()) {
+										            $j('#enroll-${patientId}').show();
+									    	  } else {
+										            $j('#enroll-${patientId}').hide();
+									    	  }
+									    });
+									});
+								</script>
 								<c:set var="referralEncounterId">
 									<referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/>
 								</c:set>
 								<tbody>
 									<tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">
-										<td><referrals:patientName patientId="${patientId}" /> (<referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/>)</td>
+										<td><referrals:patientName patientId="${patientId}" /></td>
 										<td><referrals:site referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:chwNames referralEncounterId="${referralEncounterId}"/></td>
 										<td><referrals:necName referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${referralEncounterId}" /></td>
 										<td>
-											<form method="post" action="dataEntryDefaults.form">
-												<input type="text" name="staticVisitDate" id="staticVisitDate-${patientId}" size="11" onfocus="showCalendar(this,60)" onChange="clearError('staticVisitDate-${patientId}');" /> 
-												<input type="hidden" name="referralEncounterId" value="${referralEncounterId}" /> 
-												<input type="submit" value="Enroll" id="enroll-${patientId}"/>
-											</form>
+											<span id='enrollmentSpan-${referralEncounterId}'>
+												<input type="text" name="staticVisitDate" id="staticVisitDate-${patientId}" size="11" onfocus="showCalendar(this,60)" onChange="clearError('staticVisitDate-${patientId}');" />
+												<a id='enroll-${patientId}' href="javascript:enrollHiv($j('#enrollmentSpan-${referralEncounterId}'), ${referralEncounterId}, $j('#staticVisitDate-${patientId}').val());">Enroll</a>
+											</span>
 										</td>
 									</tr>
 								</tbody>
 							</c:forEach>
 						</table>
 					</div>
-			</span>
-					</div>
+				</span>
+			</div>
 		</div>
 	</div>
 </div>

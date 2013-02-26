@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @SessionAttributes({ "sessionDate", "sessionLocation", "sessionCoordinates", "sessionStaticLocation",
-	"sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
+	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
 @Controller
 public class DataEntryDefaultsController {
 

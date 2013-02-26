@@ -39,7 +39,7 @@ public class MobileVisitDateTag extends TagSupport {
 				Encounter e = Context.getEncounterService().getEncounter(
 						encounterId);
 				DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
-				o.write("<a href='/module/htmlformentry/htmlFormEntry.form?encounterId=" + encounterId + ">" + df.format(e.getEncounterDatetime()) + "</a>");
+				o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + encounterId + "'>" + df.format(e.getEncounterDatetime()) + "</a>");
 			} else {
 				o.write("(none provided)");
 			}

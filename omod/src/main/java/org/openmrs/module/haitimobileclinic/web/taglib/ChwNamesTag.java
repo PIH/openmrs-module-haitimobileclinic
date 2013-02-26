@@ -67,7 +67,7 @@ public class ChwNamesTag extends TagSupport {
 		return Context.getObsService().getObservations(
 				Arrays.asList((Person) e.getPatient()),
 				Arrays.asList(e), questions, null, null,
-				null, null, 1, null, null, null, false);
+				null, null, null, null, null, null, false);
 	}
 
 	public int doEndTag() {

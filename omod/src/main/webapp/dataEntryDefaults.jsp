@@ -103,7 +103,7 @@ ${message}
 			<td>Static clinic (unchangeable):</td>c
 			<td>
 				<input type="text" name="sessionStaticLocationName" readonly
-					id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
+					id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
 				<input type="hidden" name="sessionStaticLocation"
 					id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
 			</td>

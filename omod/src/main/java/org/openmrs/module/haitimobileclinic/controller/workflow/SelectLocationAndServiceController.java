@@ -1,15 +1,16 @@
 package org.openmrs.module.haitimobileclinic.controller.workflow;
 
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.jfree.util.Log;
 import org.openmrs.Location;
+import org.openmrs.Privilege;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicGlobalProperties;
@@ -50,6 +51,11 @@ public class SelectLocationAndServiceController {
 		List<String> tasks = HaitiMobileClinicGlobalProperties.GLOBAL_PROPERTY_SUPPORTED_TASKS();
 		for (Iterator<String> i = tasks.iterator(); i.hasNext();) {
 			String task = i.next();
+			Collection<Privilege> ps = Context.getAuthenticatedUser().getPrivileges();
+			for (Privilege p : ps) {
+				String a = p.getName();
+				Log.error(a);
+			}
 			if (!Context.hasPrivilege("Patient Registration Task - " + task)) {
 				i.remove();
 			}

@@ -46,19 +46,25 @@ public class FormAccessFromDashboardTag extends TagSupport {
 		JspWriter o = pageContext.getOut();
 		try {
 			o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?personId=" + getPatientId() + "&patientId=" + getPatientId() +"&returnUrl=&formId=" + getFormId() + "'>Enter new</a><br/>");
-			o.write("Previous: ");
 			DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
 			List<Encounter> encounters = Context.getEncounterService().getEncounters(Context.getPatientService().getPatient(Integer.parseInt(getPatientId())), null, null, null, Arrays.asList(Context.getFormService().getForm(Integer.parseInt(getFormId()))), null, false);
 			// get the last 3 encounters
-			int startIndex = 0;
-			if (encounters.size() > 3) {
-				startIndex = encounters.size() - 3;
+			if (encounters.size() == 0) {
+				o.write("No previous encounters yet");
+			} else {
+				o.write("Previous: ");
+				int startIndex = 0;
+				if (encounters.size() > 3) {
+					startIndex = encounters.size() - 3;
+				}
+				for (int i = startIndex; i < encounters.size(); i++){
+					Encounter e = encounters.get(i);
+					o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + e.getId() + "'>" + df.format(e.getEncounterDatetime()) + "</a> ");
+				}
+				if (encounters.size() > 3) {
+					o.write(" (see Encounters tab to show all)");
+				}
 			}
-			for (int i = startIndex; i < encounters.size(); i++){
-				Encounter e = encounters.get(i);
-				o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + e.getId() + "'>" + df.format(e.getEncounterDatetime()) + "</a> ");
-			}
-			o.write(" (see Encounters tab to show all)");
 		} catch (Exception e) {
 			log.error(e);
 			try {

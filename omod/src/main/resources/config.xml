@@ -55,7 +55,7 @@
 	
 	<!-- Privileges -->
 	<privilege>
-		<name>Patient Registration Task - haitiMobileClinic</name>
+		<name>Patient Registration Task - patientRegistration</name>
 		<description>This privilege will give a user access to the Patient Registration Task in the Patient Registration module</description>
 	</privilege>
 	<privilege>
@@ -81,6 +81,14 @@
 	<privilege>
 		<name>Patient Registration Task - viewDuplicates</name>
 		<description>This privilege will give a user access to the View Patient Duplicates Task in the Patient Registration module</description>
+	</privilege>
+	<privilege>
+		<name>Patient Registration Task - mobileClinicReception</name>
+		<description>This privilege will give a user access to the Mobile Clinic Reception Task in the Patient Registration module</description>
+	</privilege>
+	<privilege>
+		<name>Patient Registration Task - mobileClinic</name>
+		<description>This privilege will give a user access to the combined Patient registration and Mobile Clinic Reception Task in the Patient Registration module</description>
 	</privilege>
 	
 	<!-- Required Global Properties -->

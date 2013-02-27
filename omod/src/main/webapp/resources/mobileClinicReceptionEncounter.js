@@ -93,6 +93,13 @@ $j(document).ready(function(){
         "checkmark-yellow"
     );
 
+    $j.removeAllDiagnosis = function() {
+        for(var i=0; i<obsArray.length; i++){
+            obsArray.splice(i,1);
+        }
+        obsArray = new Array();
+    };
+
     $j.hideAllDiv = function() {
         for(i=0; i<divItems.length; i++){
             var divItem = "#"+divItems[i];

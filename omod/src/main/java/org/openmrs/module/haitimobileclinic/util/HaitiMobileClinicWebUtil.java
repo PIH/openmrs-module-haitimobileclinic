@@ -673,4 +673,19 @@ public class HaitiMobileClinicWebUtil {
 		}
 		return savedPatient;
 	}
+	
+	public static Concept referralReasonAnswer(String enrollmentReason) {
+		if ("hiv".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
+		} else if ("tb".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_TB);
+		} else if ("malnutrition".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_MALNUTRITION);
+		} else {
+			log.error("from enrollment reason specified");
+		}
+		return null;
+	}
+
+
 }

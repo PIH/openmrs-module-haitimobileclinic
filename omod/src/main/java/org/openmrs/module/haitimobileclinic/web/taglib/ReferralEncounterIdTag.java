@@ -20,6 +20,7 @@ import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
+import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
 import org.openmrs.util.OpenmrsConstants;
 
 public class ReferralEncounterIdTag extends TagSupport {
@@ -59,10 +60,7 @@ public class ReferralEncounterIdTag extends TagSupport {
 			Patient patient = Context.getPatientService().getPatient(
 					getPatientId());
 			Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
-			Concept answer = null;
-			if ("hiv".equals(referralType)) {
-				answer = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
-			}
+			Concept answer = HaitiMobileClinicWebUtil.referralReasonAnswer(referralType);
 			List<Encounter> encounters = Context.getEncounterService()
 					.getEncounters(patient, location, fromDate, toDate, null,
 							Arrays.asList(consultation), null, null, null,

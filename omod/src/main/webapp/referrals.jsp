@@ -60,7 +60,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 									});
 								</script>
 								<c:set var="referralEncounterId">
-									<referrals:referralEncounterId patientId="${patientId}" referralType="hiv"/>
+									<referrals:referralEncounterId patientId="${patientId}" referralType="${enrollmentReason}"/>
 								</c:set>
 								<tbody>
 									<tr class="${loopStatus.index % 2 == 0 ? 'even' : 'odd'}">

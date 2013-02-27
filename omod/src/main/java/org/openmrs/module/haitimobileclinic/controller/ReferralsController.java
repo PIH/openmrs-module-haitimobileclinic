@@ -17,6 +17,7 @@ import org.openmrs.Location;
 import org.openmrs.Obs;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
+import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
 import org.openmrs.util.OpenmrsConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class ReferralsController {
 		// find obs with matching referral reason
 		Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
 		
-		Concept answer = referralReasonAnswer(enrollmentReason);
+		Concept answer = HaitiMobileClinicWebUtil.referralReasonAnswer(enrollmentReason);
 		if (answer == null) {
 			return null;
 		}
@@ -68,19 +69,6 @@ public class ReferralsController {
 		mav.getModelMap().addAttribute("cohort", cohort);
 		mav.getModelMap().addAttribute("memberIds", cohort.getMemberIds());
 		return mav;
-	}
-
-	private Concept referralReasonAnswer(String enrollmentReason) {
-		if ("hiv".equalsIgnoreCase(enrollmentReason)) {
-			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
-		} else if ("tb".equalsIgnoreCase(enrollmentReason)) {
-			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_TB);
-		} else if ("malnutrition".equalsIgnoreCase(enrollmentReason)) {
-			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_MALNUTRITION);
-		} else {
-			log.error("from enrollment reason specified");
-		}
-		return null;
 	}
 
 	private Encounter findMatchingStaticClinicEnrollmentVisit(Encounter encounter, Concept referralReasonAnswer) {
@@ -117,7 +105,7 @@ public class ReferralsController {
 			
 			Obs o = new Obs();
 			o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON));
-			o.setValueCoded(referralReasonAnswer(enrollmentReason));
+			o.setValueCoded(HaitiMobileClinicWebUtil.referralReasonAnswer(enrollmentReason));
 			o.setEncounter(enrollmentEncounter);
 			enrollmentEncounter.addObs(o);
 			enrollmentEncounter = Context.getEncounterService().saveEncounter(enrollmentEncounter);

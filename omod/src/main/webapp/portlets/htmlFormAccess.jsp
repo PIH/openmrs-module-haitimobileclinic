@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
+<%@ taglib prefix="formAccess" uri="/WEB-INF/view/module/haitimobileclinic/resources/formAccessFromDashboard.tld"%>
 
 <c:set var="personId" value="${model.personId}" />
 <c:set var="patientId" value="${model.patientId}" />
@@ -11,18 +12,15 @@ ${abc}
 
 <table cellspacing="0" cellpadding="2">
 	<tr>
-		<td>Consultation Sheet:</td>
-		<td>
-			<a href="/openmrs/module/htmlformentry/htmlFormEntry.form?personId=${personId}&patientId=${patientId}&returnUrl=&formId=1">Enter new sheet</a><br/>
-			Edit previous: <a href="">01-Feb-2013</a> <a href="">14-Jan-2013</a> <a href="">01-Jan-2013</a> (goto Encounters to see all)
-		</td>
+		<td>Mobile Clinic Consultations:</td>
+		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='1'/></td>
 	</tr>
 	<tr>
 		<td><br /></td>
 	</tr>
 	<tr>
-		<td>Referrals:</td>
-		<td></td>
+		<td>Static Clinic Enrollments:</td>
+		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='3'/></td>
 	</tr>
 	<tr>
 		<td><br /></td>

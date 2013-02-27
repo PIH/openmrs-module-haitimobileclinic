@@ -15,7 +15,6 @@ import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Location;
 import org.openmrs.Obs;
-import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.util.OpenmrsConstants;
@@ -31,8 +30,8 @@ public class ReferralsController {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
-	@RequestMapping(value = "/module/haitimobileclinic/referralsHiv.form", method = RequestMethod.GET)
-	public ModelAndView referralsHiv(@RequestParam(required = false) String locationId, @RequestParam(required = false) Date fromDate, @RequestParam(required = false) Date toDate,
+	@RequestMapping(value = "/module/haitimobileclinic/referrals.form", method = RequestMethod.GET)
+	public ModelAndView referrals(@RequestParam String enrollmentReason, @RequestParam(required = false) String locationId, @RequestParam(required = false) Date fromDate, @RequestParam(required = false) Date toDate,
 			ModelAndView mav) {
 		Location loc = null;
 		if (locationId == null || "".equals(locationId)) {
@@ -41,11 +40,13 @@ public class ReferralsController {
 			loc = Context.getLocationService().getLocation(locationId);
 		}
 
-		
 		// find obs with matching referral reason
 		Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
-		Concept answer = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
-
+		
+		Concept answer = referralReasonAnswer(enrollmentReason);
+		if (answer == null) {
+			return null;
+		}
 		Set<Integer> patientIds = new TreeSet<Integer>(); 
 		List<Encounter> encounters = Context.getEncounterService().getEncounters(null, loc, fromDate, toDate, null, Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION)), null, false);
 		if (!encounters.isEmpty()) {
@@ -55,23 +56,35 @@ public class ReferralsController {
 					Arrays.asList(answer), null, null, null, null, null, null,
 					null, false);
 			for (Obs o : obses) {
-				if (findMatchingStaticClinicEnrollmentVisit(o.getEncounter()) == null) {
+				if (findMatchingStaticClinicEnrollmentVisit(o.getEncounter(), answer) == null) {
 					// no later enrollment found, referral for this patient is still pending
 					patientIds.add(o.getEncounter().getPatientId());
 				}
 			}
 		}
 //		Cohort cohort = Context.getPatientSetService().getAllPatients();
-		Cohort cohort = new Cohort("hivReferrals", "hivReferrals", patientIds);
+		Cohort cohort = new Cohort("referrals", "referrals", patientIds);
+		mav.getModelMap().addAttribute("enrollmentReason", enrollmentReason);
 		mav.getModelMap().addAttribute("cohort", cohort);
 		mav.getModelMap().addAttribute("memberIds", cohort.getMemberIds());
 		return mav;
 	}
 
+	private Concept referralReasonAnswer(String enrollmentReason) {
+		if ("hiv".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
+		} else if ("tb".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_TB);
+		} else if ("malnutrition".equalsIgnoreCase(enrollmentReason)) {
+			return Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_MALNUTRITION);
+		} else {
+			log.error("from enrollment reason specified");
+		}
+		return null;
+	}
 
-	private Encounter findMatchingStaticClinicEnrollmentVisit(Encounter encounter) {
+	private Encounter findMatchingStaticClinicEnrollmentVisit(Encounter encounter, Concept referralReasonAnswer) {
 		Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
-		Concept answer = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV);
 
 		List<Encounter> encounters = Context.getEncounterService().getEncounters(encounter.getPatient(), encounter.getLocation(), encounter.getEncounterDatetime(), null, null, Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_STATIC_CLINIC_ENROLLMENT)), null, false);
 		if (encounters.isEmpty()) {
@@ -81,7 +94,7 @@ public class ReferralsController {
 		List<Obs> obses = Context.getObsService().getObservations(
 				null,
 				encounters, Arrays.asList(question),
-				Arrays.asList(answer), null, null, null, 1, null, null,
+				Arrays.asList(referralReasonAnswer), null, null, null, 1, null, null,
 				null, false);
 		if (obses != null && obses.size() > 0) {
 			return obses.get(0).getEncounter();
@@ -90,8 +103,8 @@ public class ReferralsController {
 	}
 
 
-	@RequestMapping(value = "/module/haitimobileclinic/enrollHiv.form", method = RequestMethod.POST)
-	public @ResponseBody String enrollInHiv(@RequestParam String referralEncounterId, @RequestParam String enrollmentDate) {
+	@RequestMapping(value = "/module/haitimobileclinic/enroll.form", method = RequestMethod.POST)
+	public @ResponseBody String enroll(@RequestParam String referralEncounterId, @RequestParam String enrollmentDate, @RequestParam String enrollmentReason) {
 		try {
 			Encounter referralEncounter = Context.getEncounterService().getEncounter(Integer.parseInt(referralEncounterId));
 			Encounter enrollmentEncounter = new Encounter();
@@ -104,7 +117,7 @@ public class ReferralsController {
 			
 			Obs o = new Obs();
 			o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON));
-			o.setValueCoded(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON_HIV));
+			o.setValueCoded(referralReasonAnswer(enrollmentReason));
 			o.setEncounter(enrollmentEncounter);
 			enrollmentEncounter.addObs(o);
 			enrollmentEncounter = Context.getEncounterService().saveEncounter(enrollmentEncounter);
@@ -116,5 +129,4 @@ public class ReferralsController {
 		}
 		return "(internal error)";
 	}
-
 }

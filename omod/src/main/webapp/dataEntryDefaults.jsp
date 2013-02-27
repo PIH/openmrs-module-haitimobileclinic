@@ -33,106 +33,108 @@
 	});
 </script>
 
-${message}
+<div align="center">
+	<br/><br/><br/>
 
-<form method="post" action="dataEntryDefaults.form">
-	<table>
-		<tr>
-			<td>Clinic Date:</td>
-			<td><input type="text" name="sessionDate" id="sessionDate"
-				size="11" value="${sessionDate}" onfocus="showCalendar(this,60)"
-				onChange="clearError('sessionDate')" /></td>
-		</tr>
-		<tr>
-			<td>Clinic Location:</td>
-			<td>
-				<table class="address">
-					<tr>
-						<td>Country</td>
-						<td><select style="display: none" name="country"
-							class="country"
-							onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.stateProvince'));" />
-						</td>
-						<td><input type="text" style="display: none" value=""
-							class="other" /></td>
-					</tr>
-					<tr>
-						<td>Department</td>
-						<td><select style="display: none" name="stateProvince"
-							class="stateProvince"
-							onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.cityVillage'));" />
-						</td>
-						<td><input type="text" style="display: none" value=""
-							class="other" /></td>
-					</tr>
-					<tr>
-						<td>Commune</td>
-						<td><select style="display: none" name="cityVillage"
-							class="cityVillage"
-							onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address3'));" />
-						</td>
-						<td><input type="text" style="display: none" value=""
-							class="other" /></td>
-					</tr>
-					<tr>
-						<td>Section Communale</td>
-						<td><select style="display: none" name="address3"
-							class="address3"
-							onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address1'));" />
-						</td>
-						<td><input type="text" style="display: none" value=""
-							class="other" /></td>
-					</tr>
-					<tr>
-						<td>Locality Habitation</td>
-						<td><select style="display: none" name="address1"
-							class="address1"
-							onChange="handleAddressFieldChange($j(this), '');" /></td>
-						<td><input type="text" style="display: none" value=""
-							class="other" /></td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>GPS coordinates:</td>c
-			<td><input type="text" name="sessionCoordinates"
-				id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
-		</tr>
-		<tr>
-			<td>Static clinic (unchangeable):</td>c
-			<td>
-				<input type="text" name="sessionStaticLocationName" readonly
-					id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
-				<input type="hidden" name="sessionStaticLocation"
-					id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
-			</td>
-		</tr>
-		<tr>
-			<td>CHW names:</td>
-			<td>
-			<input type="text" name="sessionChwName1"
-				id="sessionChwName1" size="25" value="${sessionChwName1}" />
-				 <input
-				type="text" name="sessionChwName2" id="sessionChwName2" size="25"
-				value="${sessionChwName2}" /> 
-				<input type="text"
-				name="sessionChwName3" id="sessionChwName3" size="25"
-				value="${sessionChwName3}" /></td>
-		</tr>
-		<tr>
-			<td>NEC name:</td>
-			<td><input type="text" name="sessionNecName" id="sessionNecName"
-				size="25" value="${sessionNecName}" /></td>
-		</tr>
-		<tr />
-		<tr />
-		<tr>
-			<td><input type="submit" value="Set defaults" /></td>
-		</tr>
-
-	</table>
-</form>
+	<form method="post" action="dataEntryDefaults.form">
+		<table>
+			<tr>
+				<td>Clinic Date:</td>
+				<td><input type="text" name="sessionDate" id="sessionDate"
+					size="11" value="${sessionDate}" onfocus="showCalendar(this,60)"
+					onChange="clearError('sessionDate')" /></td>
+			</tr>
+			<tr>
+				<td>Clinic Location:</td>
+				<td>
+					<table class="address">
+						<tr>
+							<td>Country</td>
+							<td><select style="display: none" name="country"
+								class="country"
+								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.stateProvince'));" />
+							</td>
+							<td><input type="text" style="display: none" value=""
+								class="other" /></td>
+						</tr>
+						<tr>
+							<td>Department</td>
+							<td><select style="display: none" name="stateProvince"
+								class="stateProvince"
+								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.cityVillage'));" />
+							</td>
+							<td><input type="text" style="display: none" value=""
+								class="other" /></td>
+						</tr>
+						<tr>
+							<td>Commune</td>
+							<td><select style="display: none" name="cityVillage"
+								class="cityVillage"
+								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address3'));" />
+							</td>
+							<td><input type="text" style="display: none" value=""
+								class="other" /></td>
+						</tr>
+						<tr>
+							<td>Section Communale</td>
+							<td><select style="display: none" name="address3"
+								class="address3"
+								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address1'));" />
+							</td>
+							<td><input type="text" style="display: none" value=""
+								class="other" /></td>
+						</tr>
+						<tr>
+							<td>Locality Habitation</td>
+							<td><select style="display: none" name="address1"
+								class="address1"
+								onChange="handleAddressFieldChange($j(this), '');" /></td>
+							<td><input type="text" style="display: none" value=""
+								class="other" /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>GPS coordinates:</td>c
+				<td><input type="text" name="sessionCoordinates"
+					id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
+			</tr>
+			<tr>
+				<td>Static clinic (unchangeable):</td>c
+				<td>
+					<input type="text" name="sessionStaticLocationName" readonly
+						id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
+					<input type="hidden" name="sessionStaticLocation"
+						id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
+				</td>
+			</tr>
+			<tr>
+				<td>CHW names:</td>
+				<td>
+				<input type="text" name="sessionChwName1"
+					id="sessionChwName1" size="25" value="${sessionChwName1}" />
+					 <input
+					type="text" name="sessionChwName2" id="sessionChwName2" size="25"
+					value="${sessionChwName2}" /> 
+					<input type="text"
+					name="sessionChwName3" id="sessionChwName3" size="25"
+					value="${sessionChwName3}" /></td>
+			</tr>
+			<tr>
+				<td>NEC name:</td>
+				<td><input type="text" name="sessionNecName" id="sessionNecName"
+					size="25" value="${sessionNecName}" /></td>
+			</tr>
+			<tr />
+			<tr />
+			<tr>
+				<td><input type="submit" value="Set defaults" /></td>
+			</tr>
+	
+		</table>
+	</form>
+</div>
 
 <br>
 &nbsp;

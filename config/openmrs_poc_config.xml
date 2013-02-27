@@ -12,13 +12,14 @@
 				</Report>
 				<Report>
 					<name>MSPP Monthly health services report</name>
-					<reportId>c276f95e-32bc-4b4e-8409-95efe8b24674</reportId>
-					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=c276f95e-32bc-4b4e-8409-95efe8b24674
+					<reportId>dc913921-99ec-4ccb-8d36-f575df3c319c</reportId>
+					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=dc913921-99ec-4ccb-8d36-f575df3c319c
 					</url>
 					<label>MSPP Monthly health services report</label>
 					<messageId>haitimobileclinic.reports.msppHealthServicesReport.title</messageId>
 					<outputFormat>excel</outputFormat>
 				</Report>
+				<!--
 				<Report>
 					<name>MSPP Notifiable diseases</name>
 					<reportId>60a3de2e-ef95-42a1-b937-68be21c3bf50</reportId>
@@ -28,28 +29,7 @@
 					<messageId>haitimobileclinic.reports.msppNotifiableDiseases.title</messageId>
 					<outputFormat>excel</outputFormat>
 				</Report>
-			</Reports>	
-		</ReportCategory>	
-		<ReportCategory	name="haitimobileclinic.reports.accounting.category">
-			<Reports name="reports">
-				<Report>
-					<name>Primary care accounting report</name>
-					<reportId>593a1917-5759-48d7-b158-f33d2975b4d5</reportId>
-					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=593a1917-5759-48d7-b158-f33d2975b4d5
-					</url>
-					<label>Primary care accounting report</label>
-					<messageId>haitimobileclinic.reports.accountingReport.title</messageId>
-					<outputFormat>excel</outputFormat>
-				</Report>
-				<Report>
-					<name>Primary care receipt sequence data quality</name>
-					<reportId>a8b0b2cc-ff6c-4496-8f8d-af3bad90b996</reportId>
-					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=a8b0b2cc-ff6c-4496-8f8d-af3bad90b996
-					</url>
-					<label>Primary care receipt sequence data quality</label>
-					<messageId>haitimobileclinic.reports.receiptSequence.title</messageId>
-					<outputFormat>excel</outputFormat>
-				</Report>
+				-->
 			</Reports>	
 		</ReportCategory>	
 		<ReportCategory name="haitimobileclinic.reports.quality.category">
@@ -64,7 +44,7 @@
 					<outputFormat>excel</outputFormat>
 				</Report>
 				<Report>
-					<name>Patient care diagnosis quality report</name>
+					<name>Patient care diagnosis quality report (works)</name>
 					<reportId>f1e504f7-ac84-420e-a8c7-947f55ad578f</reportId>
 					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=f1e504f7-ac84-420e-a8c7-947f55ad578f
 					</url>
@@ -73,7 +53,7 @@
 					<outputFormat>excel</outputFormat>
 				</Report>
 				<Report>
-					<name>Patient registration data quality report</name>
+					<name>Patient registration data quality report (works)</name>
 					<reportId>d8851f73-9c11-4a75-8a9f-a254e725a97e</reportId>
 					<url>module/haitimobileclinic/workflow/reportingTask.form?reportId=d8851f73-9c11-4a75-8a9f-a254e725a97e
 					</url>
@@ -82,7 +62,7 @@
 					<outputFormat>excel</outputFormat>
 				</Report>
                 <Report>
-                    <name>Implausible diagnosis for age</name>
+                    <name>Implausible diagnosis for age (works, but depends on PIT)</name>
                     <reportId>81fab0c8-33b6-427c-9fdd-9af84ae1888c</reportId>
                     <url>module/haitimobileclinic/workflow/reportingTask.form?reportId=81fab0c8-33b6-427c-9fdd-9af84ae1888c
                     </url>
@@ -91,7 +71,7 @@
                     <outputFormat>excel</outputFormat>
                 </Report>
                 <Report>
-                    <name>Notifiable disease validation</name>
+                    <name>Notifiable disease validation (works, but depends on PIT)</name>
                     <reportId>87321e35-442e-43e7-9c67-398815eb9135</reportId>
                     <url>module/haitimobileclinic/workflow/reportingTask.form?reportId=87321e35-442e-43e7-9c67-398815eb9135
                     </url>
@@ -100,21 +80,12 @@
                     <outputFormat>excel</outputFormat>
                 </Report>
                 <Report>
-                    <name>LQAS 25 diagnosis</name>
-                    <reportId>e70bd740-1af7-4a57-8c81-d386858c7b9e</reportId>
-                    <url>module/haitimobileclinic/workflow/reportingTask.form?reportId=e70bd740-1af7-4a57-8c81-d386858c7b9e
+                    <name>LQAS 25 diagnosis (works, but PIT not yet implemented)</name>
+                    <reportId>d79c5fec-ca07-42a6-8d43-77eeec10ea3e</reportId>
+                    <url>module/haitimobileclinic/workflow/reportingTask.form?reportId=d79c5fec-ca07-42a6-8d43-77eeec10ea3e
                     </url>
                     <label>LQAS 25 diagnosis</label>
                     <messageId>haitimobileclinic.reports.LQAS25.title</messageId>
-                    <outputFormat>excel</outputFormat>
-                </Report>
-                <Report>
-                    <name>Reception encounters with provider</name>
-                    <reportId>0a5cb452-1ef5-44ba-8903-caaba5c409eb</reportId>
-                    <url>module/haitimobileclinic/workflow/reportingTask.form?reportId=0a5cb452-1ef5-44ba-8903-caaba5c409eb
-                    </url>
-                    <label>Reception encounters with provider</label>
-                    <messageId>haitimobileclinic.reports.receptionEncounterWProvider.title</messageId>
                     <outputFormat>excel</outputFormat>
                 </Report>
 			</Reports>	

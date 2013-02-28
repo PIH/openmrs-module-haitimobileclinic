@@ -15,6 +15,7 @@ import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Location;
 import org.openmrs.Obs;
+import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
@@ -49,15 +50,20 @@ public class ReferralsController {
 			return null;
 		}
 		Set<Integer> patientIds = new TreeSet<Integer>(); 
-		List<Encounter> encounters = Context.getEncounterService().getEncounters(null, loc, fromDate, toDate, null, Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION)), null, false);
-		if (!encounters.isEmpty()) {
-			List<Obs> obses = Context.getObsService().getObservations(
-					null,
-					encounters, Arrays.asList(question),
-					Arrays.asList(answer), null, null, null, null, null, null,
-					null, false);
-			for (Obs o : obses) {
-				if (findMatchingStaticClinicEnrollmentVisit(o.getEncounter(), answer) == null) {
+		List<Obs> allReferralObses = Context.getObsService().getObservations(
+				null,
+				null, Arrays.asList(question),
+				Arrays.asList(answer), null, null, null, null, null, null,
+				null, false);
+		for (Obs o : allReferralObses) {
+			// slightly inefficient as this goes through many patients to find out if the most recent consultation encounter
+			// contains a relevant referral
+			Encounter referral = HaitiMobileClinicWebUtil.mostRecentReferralEncounter(o.getEncounter().getEncounterDatetime(), toDate, o.getEncounter().getPatient(), answer);
+			if (referral != null) {
+				// patient was referred with a particular encounter
+				// now check if there is a later enrollment encounter
+				Encounter enrollment = HaitiMobileClinicWebUtil.matchingEnrollmentEncounter(referral, toDate, answer);
+				if (enrollment == null) {
 					// no later enrollment found, referral for this patient is still pending
 					patientIds.add(o.getEncounter().getPatientId());
 				}

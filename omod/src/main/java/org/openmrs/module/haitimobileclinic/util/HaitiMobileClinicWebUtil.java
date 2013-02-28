@@ -1,6 +1,7 @@
 package org.openmrs.module.haitimobileclinic.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +38,7 @@ import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicGlobalProperties;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicUtil;
 import org.openmrs.module.haitimobileclinic.service.HaitiMobileClinicService;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsConstants.PERSON_TYPE;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -687,5 +689,59 @@ public class HaitiMobileClinicWebUtil {
 		return null;
 	}
 
+	public static Encounter mostRecentReferralEncounter(Date fromDate,
+			Date toDate, Patient patient, Concept answer)  {
+		EncounterType consultation = Context.getEncounterService()
+				.getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION);
+		Location location = Context.getLocationService().getLocation(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME));
+		Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
+		List<Encounter> encounters = Context.getEncounterService()
+				.getEncounters(patient, location, fromDate, toDate, null,
+						Arrays.asList(consultation), null, null, null,
+						false);
+		if (encounters != null && encounters.size() > 0) {
+			Encounter e = encounters.get(encounters.size() - 1);
+			List<Obs> obses = Context.getObsService().getObservations(
+					Arrays.asList((Person) e.getPatient()),
+					Arrays.asList(e), Arrays.asList(question),
+					Arrays.asList(answer), null, null, null, 1, null, null,
+					null, false);
+			if (obses == null || obses.size() != 1) {
+				return null;
+			} else {
+				return obses.get(0).getEncounter();
+			}
+		} else {
+			return null;
+		}
+	}
+	
+	public static Encounter getMatchingTbResultsEncounter(Encounter e, Date toDate) {
+		List<Encounter> encounters = Context.getEncounterService()
+				.getEncounters(e.getPatient(), null, e.getEncounterDatetime(), toDate, null,
+						Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_TB_RESULTS)), null, null, null,
+						false);
+		if (encounters.isEmpty()) {
+			return null;
+		} else {
+			return encounters.get(encounters.size() - 1);
+		}
+	}
 
+	public static Encounter matchingEnrollmentEncounter(Encounter referral, Date toDate, Concept referralReason) {
+		// get all later enrollments
+		List<Encounter> laterEnrollments = Context.getEncounterService().getEncounters(referral.getPatient(), referral.getLocation(), 
+				referral.getEncounterDatetime(), toDate, null, Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_STATIC_CLINIC_ENROLLMENT)), null, false);
+		// only look into those with matching referral
+		List<Obs> enrollments = Context.getObsService().getObservations(
+				Arrays.asList((Person) referral.getPatient()),
+				laterEnrollments, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON)),
+				Arrays.asList(referralReason), null, null, null, null, null, null,
+				null, false);
+		if (laterEnrollments.isEmpty() || enrollments.isEmpty()) {
+			// no later enrollment found, still pending
+			return null;
+		}
+		return enrollments.get(enrollments.size() - 1).getEncounter();
+	}
 }

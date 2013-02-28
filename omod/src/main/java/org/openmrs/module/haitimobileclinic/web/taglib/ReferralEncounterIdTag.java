@@ -54,33 +54,13 @@ public class ReferralEncounterIdTag extends TagSupport {
 		try {
 			Date fromDate = null;
 			Date toDate = null;
-			EncounterType consultation = Context.getEncounterService()
-					.getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION);
-			Location location = Context.getLocationService().getLocation(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME));
-			Patient patient = Context.getPatientService().getPatient(
-					getPatientId());
-			Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
 			Concept answer = HaitiMobileClinicWebUtil.referralReasonAnswer(referralType);
-			List<Encounter> encounters = Context.getEncounterService()
-					.getEncounters(patient, location, fromDate, toDate, null,
-							Arrays.asList(consultation), null, null, null,
-							false);
-			if (encounters != null && encounters.size() > 0) {
-				Encounter e = encounters.get(encounters.size() - 1);
-				List<Obs> obses = Context.getObsService().getObservations(
-						Arrays.asList((Person) e.getPatient()),
-						Arrays.asList(e), Arrays.asList(question),
-						Arrays.asList(answer), null, null, null, 1, null, null,
-						null, false);
-				if (obses == null || obses.size() != 1) {
-					o.write("");
-				} else {
-					o.write("" + obses.get(0).getEncounter().getEncounterId());
-				}
+			Encounter e = HaitiMobileClinicWebUtil.mostRecentReferralEncounter(fromDate, toDate, Context.getPatientService().getPatient(getPatientId()), answer);
+			if (e != null) {
+				o.write("" + e.getEncounterId());
 			} else {
 				o.write("");
 			}
-
 		} catch (Exception e) {
 			log.error(e);
 			try {

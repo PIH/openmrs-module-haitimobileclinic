@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>point of care tag library</description>
+	<tlib-version>1.1</tlib-version>
+	<short-name>tbSuspect</short-name>
+
+	<tag>
+		<description></description>
+		<name>tbSuspectEncounterId</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.TbSuspectEncounterIdTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>patientId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
+		<name>sputumResult</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.SputumResultTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>test</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tbSuspectEncounterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
+		<name>overallTbStatus</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.OverallTbStatusTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>tbSuspectEncounterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+</taglib>

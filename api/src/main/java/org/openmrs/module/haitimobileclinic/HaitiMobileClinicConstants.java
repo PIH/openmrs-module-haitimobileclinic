@@ -72,9 +72,20 @@ public class HaitiMobileClinicConstants {
 	public static final Integer UNKNOWN_PROVIDER_ID = 2; 
 	public static final Integer ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION = 19; 
 	public static final Integer ENCOUNTER_TYPE_ID_STATIC_CLINIC_ENROLLMENT = 20; 
+	public static final Integer ENCOUNTER_TYPE_ID_TB_RESULTS = 21; 
 	public static final Integer FORM_ID_STATIC_CLINIC_ENROLLMENT = 3;
+	public static final Integer FORM_ID_TB_RESULTS = 4; 
 	public static final Integer CONCEPT_ID_REFERRAL_REASON = 6760;
 	public static final Integer CONCEPT_ID_REFERRAL_REASON_HIV = 6751; 
 	public static final Integer CONCEPT_ID_REFERRAL_REASON_TB = 6752; 
 	public static final Integer CONCEPT_ID_REFERRAL_REASON_MALNUTRITION = 6753; 
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_1 = 6777; 
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_2 = 6778; 
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_3 = 6779; 
+	public static final Integer CONCEPT_ID_OVERALL_TB_STATUS = 6782;
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_1 = 6783; 
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_2 = 6784; 
+	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_3 = 6785;
+	public static final Integer CONCEPT_ID_OVERALL_TB_STATUS_DATE = 6786;
+
 }

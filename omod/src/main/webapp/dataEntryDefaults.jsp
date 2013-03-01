@@ -5,6 +5,9 @@
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 <openmrs:htmlInclude
 	file="/moduleResources/addresshierarchy/addressHierarchy.js" />
+<%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
+
+<script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	var $j = jQuery;
@@ -40,9 +43,13 @@
 		<table>
 			<tr>
 				<td>Clinic Date:</td>
-				<td><input type="text" name="sessionDate" id="sessionDate"
+				<td>
+					<referrals:datePicker id='sessionDate' initialValue='${sessionDate}'/>
+					<!-- 
+					<input type="text" name="sessionDate" id="sessionDate"
 					size="11" value="${sessionDate}" onfocus="showCalendar(this,60)"
 					onChange="clearError('sessionDate')" /></td>
+					 -->
 			</tr>
 			<tr>
 				<td>Clinic Location:</td>

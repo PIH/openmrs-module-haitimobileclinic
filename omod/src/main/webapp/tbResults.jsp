@@ -5,13 +5,17 @@
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 
 <script>
-function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReason) {	
+function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1Date, sputumResult2, sputumResult2Date, sputumResult3, sputumResult3Date, status, statusDate, existingResultEncounterId) {	
 	$j.post(
-			 '/openmrs/module/haitimobileclinic/enroll.form',
-			 { 'referralEncounterId': referralEncounter, 'enrollmentDate': enrollmentDate, 'enrollmentReason': enrollmentReason },
+			 '/openmrs/module/haitimobileclinic/saveTbResult.form',
+			 { 'tbSuspectEncounterId': tbSuspectEncounterId, 'existingResultEncounterId': existingResultEncounterId,
+				 'sputumResult1': sputumResult1, 'sputumResult1Date': sputumResult1Date, 
+				 'sputumResult2': sputumResult2, 'sputumResult2Date': sputumResult2Date, 
+				 'sputumResult3': sputumResult3, 'sputumResult3Date': sputumResult3Date, 
+				 'status': status, 'statusDate': statusDate },
 			 function (data) {
-						fieldToUpdate.empty();
-						fieldToUpdate.html(data);
+						//fieldToUpdate.empty();
+						//fieldToUpdate.html(data);
 		  		}
 		);
 	}
@@ -33,10 +37,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 									<th>CHW names</th>
 									<th>NEC name</th>
 									<th>Screening visit</th>
-									<th>Sputum result #1</th>
-									<th>Sputum result #2</th>
-									<th>Sputum result #3</th>
-									<th>Overall status</th>
+									<th>TB Result and status</th>
 								</tr>
 							</thead>
 							<c:forEach var="patientId" items="${memberIds}" varStatus="loopStatus">
@@ -62,16 +63,22 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 										<td><referrals:chwNames referralEncounterId="${tbSuspectEncounterId}"/></td>
 										<td><referrals:necName referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${tbSuspectEncounterId}" /></td>
-										<td><tbSuspect:sputumResult test="1" tbSuspectEncounterId="${tbSuspectEncounterId}" /></td>
-										<td><tbSuspect:sputumResult test="2" tbSuspectEncounterId="${tbSuspectEncounterId}" /></td>
-										<td><tbSuspect:sputumResult test="3" tbSuspectEncounterId="${tbSuspectEncounterId}" /></td>
-										<td><tbSuspect:overallTbStatus tbSuspectEncounterId="${tbSuspectEncounterId}" /></td>
-										<td>
-											<span id='enrollmentSpan-${tbSuspectEncounterId}'>
-												<input type="text" name="staticVisitDate" id="staticVisitDate-${patientId}" size="11" onfocus="showCalendar(this,60)" onChange="clearError('staticVisitDate-${patientId}');" />
-												<a id='enroll-${patientId}' href="javascript:enroll($j('#enrollmentSpan-${tbSuspectEncounterId}'), ${tbSuspectEncounterId}, $j('#staticVisitDate-${patientId}').val());">Enroll</a>
-											</span>
-										</td>
+											<td>
+																					<span id='span-${patientId}'>								
+											
+											<tbSuspect:tbResultAndStatus tbSuspectEncounterId="${tbSuspectEncounterId}" />
+											
+																					</span>
+											
+											</td>
+											<td>
+												<a id='save-${patientId}' href="javascript:save($j('#span-${patientId}'), ${tbSuspectEncounterId},
+													$j('#sputum1-${patientId}').val(), $j('#sputumdate1-${patientId}').val(), 
+													$j('#sputum2-${patientId}').val(), $j('#sputumdate2-${patientId}').val(), 
+													$j('#sputum3-${patientId}').val(), $j('#sputumdate3-${patientId}').val(), 
+													$j('#status-${patientId}').val(), $j('#statusdate-${patientId}').val(),
+													$j('#resultEncounterId-${patientId}').val());">Save</a>
+											</td>
 									</tr>
 								</tbody>
 							</c:forEach>

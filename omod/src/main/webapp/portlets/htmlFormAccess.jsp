@@ -4,12 +4,6 @@
 <c:set var="personId" value="${model.personId}" />
 <c:set var="patientId" value="${model.patientId}" />
 
-<%
-String abc = "ABC";
-%>
-
-${abc}
-
 <table cellspacing="0" cellpadding="2">
 	<tr>
 		<td>Mobile Clinic Consultations:</td>
@@ -27,6 +21,6 @@ ${abc}
 	</tr>
 	<tr>
 		<td>TB results:</td>
-		<td></td>
+		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='4'/></td>
 	</tr>
 </table>

@@ -10,6 +10,23 @@
 
 	<tag>
 		<description></description>
+		<name>datePicker</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.DatePickerTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>initialValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
 		<name>patientName</name>
 		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.PatientNameTag</tag-class>
 		<body-content>empty</body-content>

@@ -22,6 +22,18 @@
 
 	<tag>
 		<description></description>
+		<name>tbResultAndStatus</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.TbResultAndStatusTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>tbSuspectEncounterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
 		<name>sputumResult</name>
 		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.SputumResultTag</tag-class>
 		<body-content>empty</body-content>

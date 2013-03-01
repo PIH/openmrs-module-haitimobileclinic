@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
+<script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>
 
 <script>
 function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReason) {	
@@ -50,8 +51,8 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 								<script type="text/javascript">
 									$j(function() {
 										$j('#enroll-${patientId}').hide();
-									    $j('#staticVisitDate-${patientId}').change(function() {
-									    	  if ($j('#staticVisitDate-${patientId}').val()) {
+									    $j('#staticVisitDate-${patientId}-display').change(function() {
+									    	  if ($j('#staticVisitDate-${patientId}-display').val()) {
 										            $j('#enroll-${patientId}').show();
 									    	  } else {
 										            $j('#enroll-${patientId}').hide();
@@ -72,7 +73,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 										<td><referrals:mobileVisitDate referralEncounterId="${referralEncounterId}" /></td>
 										<td>
 											<span id='enrollmentSpan-${referralEncounterId}'>
-												<input type="text" name="staticVisitDate" id="staticVisitDate-${patientId}" size="11" onfocus="showCalendar(this,60)" onChange="clearError('staticVisitDate-${patientId}');" />
+												<referrals:datePicker id='staticVisitDate-${patientId}'/>
 												<a id='enroll-${patientId}' href="javascript:enroll($j('#enrollmentSpan-${referralEncounterId}'), ${referralEncounterId}, $j('#staticVisitDate-${patientId}').val(), '${enrollmentReason}');">Enroll</a>
 											</span>
 										</td>

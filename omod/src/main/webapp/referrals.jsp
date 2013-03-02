@@ -86,6 +86,14 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 			</div>
 		</div>
 	</div>
+	<br>
+	&nbsp;
+	<br>
+	For HIV and Malnutrition:
+	Only patients with pending referrals are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and make sure the patient is not yet enrolled with a matching Static Clinic Enrollment.
+	<br><br>
+	For TB:
+	Only patients with pending referrals and a confirmed BT status are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and confirm the <a href="/openmrs/module/haitimobileclinic/tbResults.form">TB status</a> for this patient.  
 </div>
 
 <br>

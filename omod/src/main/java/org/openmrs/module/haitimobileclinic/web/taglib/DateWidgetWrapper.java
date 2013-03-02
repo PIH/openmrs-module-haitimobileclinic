@@ -10,7 +10,7 @@ public class DateWidgetWrapper extends DateWidget {
 	public DateWidgetWrapper() {
 	}
 
-    public Date parseDate(String value) {
+    public static Date parseDate(String value) {
     	return (Date) HtmlFormEntryUtil.convertToType(value, Date.class);
     }
 }

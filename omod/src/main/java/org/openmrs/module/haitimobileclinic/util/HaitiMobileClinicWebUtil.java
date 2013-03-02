@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -744,4 +745,35 @@ public class HaitiMobileClinicWebUtil {
 		}
 		return enrollments.get(enrollments.size() - 1).getEncounter();
 	}
+
+	public static Set<Integer> patientIdsWithPendingReferrals(
+			String enrollmentReason, Date toDate) {
+		Concept question = Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON);
+		Set<Integer> patientIds = new TreeSet<Integer>(); 
+		Concept answer = HaitiMobileClinicWebUtil.referralReasonAnswer(enrollmentReason);
+		if (answer == null) {
+			return patientIds;
+		}
+		List<Obs> allReferralObses = Context.getObsService().getObservations(
+				null,
+				null, Arrays.asList(question),
+				Arrays.asList(answer), null, null, null, null, null, null,
+				null, false);
+		for (Obs o : allReferralObses) {
+			// slightly inefficient as this goes through many patients to find out if the most recent consultation encounter
+			// contains a relevant referral
+			Encounter referral = HaitiMobileClinicWebUtil.mostRecentReferralEncounter(o.getEncounter().getEncounterDatetime(), toDate, o.getEncounter().getPatient(), answer);
+			if (referral != null) {
+				// patient was referred with a particular encounter
+				// now check if there is a later enrollment encounter
+				Encounter enrollment = HaitiMobileClinicWebUtil.matchingEnrollmentEncounter(referral, toDate, answer);
+				if (enrollment == null) {
+					// no later enrollment found, referral for this patient is still pending
+					patientIds.add(o.getEncounter().getPatientId());
+				}
+			}
+		}
+		return patientIds;
+	}
+
 }

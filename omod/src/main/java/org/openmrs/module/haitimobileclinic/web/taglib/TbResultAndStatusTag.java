@@ -19,6 +19,9 @@ import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.htmlformentry.FormEntryContext;
+import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
+import org.openmrs.module.htmlformentry.widget.Widget;
 
 public class TbResultAndStatusTag extends TagSupport {
 
@@ -44,43 +47,47 @@ public class TbResultAndStatusTag extends TagSupport {
 				Encounter e = Context.getEncounterService().getEncounter(encounterId);
 				Encounter tbResult = HaitiMobileClinicWebUtil.getMatchingTbResultsEncounter(e, null);
 
+				// sputum 1
+				Obs s1Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_1)));
+				String s1 = inputResult(s1Obs, e.getPatientId(), "sputum1");
+				Obs s1ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_1)));
+				String s1Date = dateInput(s1ObsDate, e.getPatientId(), "sputumdate1");
+				
+				// sputum 2
+				Obs s2Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_2)));
+				String s2 = inputResult(s2Obs, e.getPatientId(), "sputum2");
+				Obs s2ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_2)));
+				String s2Date = dateInput(s2ObsDate, e.getPatientId(), "sputumdate2");
+				
+				// sputum 3
+				Obs s3Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_3)));
+				String s3 = inputResult(s3Obs, e.getPatientId(), "sputum3");
+				Obs s3ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_3)));
+				String s3Date = dateInput(s3ObsDate, e.getPatientId(), "sputumdate3");
 
-					// sputum 1
-					Obs s1Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_1)));
-					String s1 = inputResult(s1Obs, e.getPatientId(), "sputum1");
-					Obs s1ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_1)));
-					String s1Date = dateInput(s1ObsDate, e.getPatientId(), "sputumdate1");
-					
-					// sputum 2
-					Obs s2Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_2)));
-					String s2 = inputResult(s2Obs, e.getPatientId(), "sputum2");
-					Obs s2ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_2)));
-					String s2Date = dateInput(s2ObsDate, e.getPatientId(), "sputumdate2");
-					
-					// sputum 3
-					Obs s3Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_3)));
-					String s3 = inputResult(s3Obs, e.getPatientId(), "sputum3");
-					Obs s3ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_3)));
-					String s3Date = dateInput(s3ObsDate, e.getPatientId(), "sputumdate3");
+				// overall status
+				Obs statusObs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS)));
+				String status = inputStatus(statusObs, e.getPatientId(), "status");
+				Obs statusObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE)));
+				String statusDate = dateInput(statusObsDate, e.getPatientId(), "statusdate");
 
-					// overall status
-					Obs statusObs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS)));
-					String status = inputStatus(statusObs, e.getPatientId(), "status");
-					Obs statusObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE)));
-					String statusDate = dateInput(statusObsDate, e.getPatientId(), "statusdate");
-
-					o.write("<table><tr>");
-					o.write("<td>" + s1 + "</td>");
-					o.write("<td>" + s2 + "</td>");
-					o.write("<td>" + s3 + "</td>");
-					o.write("<td>" + status + "</td>");
-					o.write("</tr><tr>");
-					o.write("<td>" + s1Date + "</td>");
-					o.write("<td>" + s2Date + "</td>");
-					o.write("<td>" + s3Date + "</td>");
-					o.write("<td>" + statusDate + "<input type='hidden' name='resultEncounterId' id='resultEncounterId-"+ e.getPatientId() + "' value='" + (tbResult != null ? tbResult.getEncounterId() : "") + "'></td>");
-					o.write("</tr></table>");
-
+				o.write("<table><tr>");
+				o.write("<td>" + s1 + "</td>");
+				o.write("<td>" + s2 + "</td>");
+				o.write("<td>" + s3 + "</td>");
+				o.write("<td>" + status + "</td>");
+				if (tbResult != null) {
+					DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
+					o.write("<td rowspan='2'><a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + tbResult.getEncounterId() + "'>" + df.format(e.getEncounterDatetime()) + "</a></td>");
+				} else {
+					o.write("<td rowspan='2'></td>");
+				}
+				o.write("</tr><tr>");
+				o.write("<td>" + s1Date + "</td>");
+				o.write("<td>" + s2Date + "</td>");
+				o.write("<td>" + s3Date + "</td>");
+				o.write("<td>" + statusDate + "<input type='hidden' name='resultEncounterId' id='resultEncounterId-"+ e.getPatientId() + "' value='" + (tbResult != null ? tbResult.getEncounterId() : "") + "'></td>");
+				o.write("</tr></table>");
 			} else {
 				o.write("(no TB suspect)");
 			}
@@ -124,21 +131,27 @@ public class TbResultAndStatusTag extends TagSupport {
 
 	private String dateInput(Obs obsDate, Integer patientId, String field) {
 		try {
-			DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
-			String date = (obsDate != null ? df.format(obsDate.getValueDate()) : "");
-			String id = field + "-" + patientId;
-			String s = "<input type='text' name='" + field + "' id='"+ id + "' size='11' onfocus='showCalendar(this,60)' onChange='clearError(\"" + id + "\");' value='" + date + "'/>";
+			final String id = field + "-" + patientId;
+			// re-use HFE datewidget
+			DateWidgetWrapper dw  = new DateWidgetWrapper();
+			FormEntryContext fec = new FormEntryContext(Mode.EDIT){
+			    public String getFieldName(Widget widget) {
+			    	return id;
+			    }
+			};
+			if (obsDate != null && obsDate.getValueDate() != null) {
+				dw.setInitialValue(obsDate.getValueDate());
+			}
+			String s = dw.generateHtml(fec);
+			// brain dead stupid way to get rid of the pattern text just for this Results entering part
+			// take both possible locales (of US, UK, HA, FR) into account
+			s = s.replace(" (mm/dd/yyyy)", "");
+			s = s.replace(" (dd/mm/yyyy)", "");
 			return s;
 		} catch (Exception e) {
 			log.error(e);
 		}
 		return "(error)";
-	}
-
-	private String displayValue(Encounter tbResult, Obs obs) throws IOException {
-		DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
-		String d = df.format(getObsesFromEncounter(tbResult, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE))).get(0).getValueDate());
-		return obs.getValueCoded().getName().getName() + " (" + d + ")";
 	}
 
 	private List<Obs> getObsesFromEncounter(Encounter e, List<Concept> questions) {

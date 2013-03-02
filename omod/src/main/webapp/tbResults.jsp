@@ -3,6 +3,7 @@
 <%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
 <%@ taglib prefix="tbSuspect" uri="/WEB-INF/view/module/haitimobileclinic/resources/tbSuspect.tld"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
+<script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>
 
 <script>
 function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1Date, sputumResult2, sputumResult2Date, sputumResult3, sputumResult3Date, status, statusDate, existingResultEncounterId) {	
@@ -23,7 +24,7 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 
 <div id="findPatient" class="portlet">
 	<div>
-		<b class="boxHeader">Pending enrollments for ${enrollmentReason}</b>
+		<b class="boxHeader">TB Status and Results</b>
 		<div class="box">
 			<div class="searchWidgetContainer" id="referrals">
 			<span class="openmrsSearchDiv" style="display: inline;">
@@ -38,6 +39,7 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 									<th>NEC name</th>
 									<th>Screening visit</th>
 									<th>TB Result and status</th>
+									<th></th>
 								</tr>
 							</thead>
 							<c:forEach var="patientId" items="${memberIds}" varStatus="loopStatus">
@@ -63,22 +65,15 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 										<td><referrals:chwNames referralEncounterId="${tbSuspectEncounterId}"/></td>
 										<td><referrals:necName referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${tbSuspectEncounterId}" /></td>
-											<td>
-																					<span id='span-${patientId}'>								
-											
-											<tbSuspect:tbResultAndStatus tbSuspectEncounterId="${tbSuspectEncounterId}" />
-											
-																					</span>
-											
-											</td>
-											<td>
-												<a id='save-${patientId}' href="javascript:save($j('#span-${patientId}'), ${tbSuspectEncounterId},
-													$j('#sputum1-${patientId}').val(), $j('#sputumdate1-${patientId}').val(), 
-													$j('#sputum2-${patientId}').val(), $j('#sputumdate2-${patientId}').val(), 
-													$j('#sputum3-${patientId}').val(), $j('#sputumdate3-${patientId}').val(), 
-													$j('#status-${patientId}').val(), $j('#statusdate-${patientId}').val(),
-													$j('#resultEncounterId-${patientId}').val());">Save</a>
-											</td>
+										<td><span id='span-${patientId}'><tbSuspect:tbResultAndStatus tbSuspectEncounterId="${tbSuspectEncounterId}" /></span></td>
+										<td>
+											<a id='save-${patientId}' href="javascript:save($j('#span-${patientId}'), ${tbSuspectEncounterId},
+												$j('#sputum1-${patientId}').val(), $j('#sputumdate1-${patientId}').val(), 
+												$j('#sputum2-${patientId}').val(), $j('#sputumdate2-${patientId}').val(), 
+												$j('#sputum3-${patientId}').val(), $j('#sputumdate3-${patientId}').val(), 
+												$j('#status-${patientId}').val(), $j('#statusdate-${patientId}').val(),
+												$j('#resultEncounterId-${patientId}').val());">Save</a>
+										</td>
 									</tr>
 								</tbody>
 							</c:forEach>
@@ -88,6 +83,10 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 			</div>
 		</div>
 	</div>
+	<br>
+	&nbsp;
+	<br>
+	Only patients with pending TB referrals are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and make sure the patient is not yet enrolled with a matching Static Clinic Enrollment.
 </div>
 
 <br>

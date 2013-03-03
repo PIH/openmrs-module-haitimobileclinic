@@ -10,11 +10,13 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
 import org.openmrs.module.haitimobileclinic.web.taglib.DateWidgetWrapper;
 import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +32,10 @@ public class ReferralsController {
 	@RequestMapping(value = "/module/haitimobileclinic/referrals.form", method = RequestMethod.GET)
 	public ModelAndView referrals(@RequestParam String enrollmentReason, @RequestParam(required = false) String locationId, @RequestParam(required = false) Date fromDate, @RequestParam(required = false) Date toDate,
 			ModelAndView mav) {
-//		Location loc = null;
-//		if (locationId == null || "".equals(locationId)) {
-//			loc = Context.getLocationService().getLocation(Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION)));
-//		} else {
-//			loc = Context.getLocationService().getLocation(locationId);
-//		}
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
 
 		// find obs with matching referral reason
 		Set<Integer> patientIds = HaitiMobileClinicWebUtil.patientIdsWithPendingReferrals(enrollmentReason, toDate);
@@ -50,6 +50,10 @@ public class ReferralsController {
 
 	@RequestMapping(value = "/module/haitimobileclinic/enroll.form", method = RequestMethod.POST)
 	public @ResponseBody String enroll(@RequestParam String referralEncounterId, @RequestParam String enrollmentDate, @RequestParam String enrollmentReason) {
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+			return "redirect:/module/haitimobileclinic/dataEntryDefaults.form"; 
 		try {
 			Encounter referralEncounter = Context.getEncounterService().getEncounter(Integer.parseInt(referralEncounterId));
 			Encounter enrollmentEncounter = new Encounter();

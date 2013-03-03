@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
+<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/module/haitimobileclinic/referrals.form" />
 <%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 <script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>

@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
+<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/module/haitimobileclinic/referralsSelect.htm" />
 
 <div align="center">
 	<br/><br/><br/>

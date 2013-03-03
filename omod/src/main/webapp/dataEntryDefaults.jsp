@@ -1,10 +1,8 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
-<openmrs:require privilege="View Patients" otherwise="/login.htm"
-	redirect="/module/haitimobileclinic/dataEntryDefaults.htm" />
+<openmrs:require privilege="View Patients" otherwise="/login.htm" redirect="/module/haitimobileclinic/dataEntryDefaults.form" />
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
-<openmrs:htmlInclude
-	file="/moduleResources/addresshierarchy/addressHierarchy.js" />
+<openmrs:htmlInclude file="/moduleResources/addresshierarchy/addressHierarchy.js" />
 <%@ taglib prefix="referrals" uri="/WEB-INF/view/module/haitimobileclinic/resources/referrals.tld"%>
 
 <script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>
@@ -38,7 +36,8 @@
 
 <div align="center">
 	<br/><br/><br/>
-
+	Settings defaults for the current data entry session.
+	<br/><br/><br/>
 	<form method="post" action="dataEntryDefaults.form">
 		<table>
 			<tr>

@@ -11,11 +11,13 @@ import org.openmrs.Cohort;
 import org.openmrs.Encounter;
 import org.openmrs.Location;
 import org.openmrs.Obs;
+import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
 import org.openmrs.module.haitimobileclinic.web.taglib.DateWidgetWrapper;
 import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,11 @@ public class TbResultsController {
 	@RequestMapping(value = "/module/haitimobileclinic/tbResults.form", method = RequestMethod.GET)
 	public ModelAndView referrals(@RequestParam(required = false) String locationId, @RequestParam(required = false) Date fromDate, @RequestParam(required = false) Date toDate,
 			ModelAndView mav) {
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
+
 		Location loc = null;
 		if (locationId == null || "".equals(locationId)) {
 			loc = Context.getLocationService().getLocation(Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION)));
@@ -54,6 +61,11 @@ public class TbResultsController {
 			@RequestParam String sputumResult3, @RequestParam String sputumResult3Date,
 			@RequestParam String status, @RequestParam String statusDate) {
 		try {
+			if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+				throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+			if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+				return "redirect:/module/haitimobileclinic/dataEntryDefaults.form"; 
+
 			Encounter referralEncounter = Context.getEncounterService().getEncounter(Integer.parseInt(tbSuspectEncounterId));
 			Encounter existingResultEncounter = null;
 			if (existingResultEncounterId != null && !"".equals(existingResultEncounterId)) {

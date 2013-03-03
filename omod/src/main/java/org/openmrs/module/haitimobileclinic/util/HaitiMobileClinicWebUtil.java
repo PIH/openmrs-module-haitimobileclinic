@@ -42,6 +42,8 @@ import org.openmrs.module.haitimobileclinic.service.HaitiMobileClinicService;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsConstants.PERSON_TYPE;
 import org.openmrs.util.OpenmrsUtil;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 public class HaitiMobileClinicWebUtil {
@@ -776,4 +778,33 @@ public class HaitiMobileClinicWebUtil {
 		return patientIds;
 	}
 
+	public static boolean hasDefaultsBeenSet() {
+		if (isEmpty(session().getAttribute("sessionDate")))
+			return false;
+		if (isEmpty(session().getAttribute("sessionCoordinates")))
+			return false;
+		if (isEmpty(session().getAttribute("sessionStaticLocationName")))
+			return false;
+		if (isEmpty(session().getAttribute("sessionStaticLocation")))
+			return false;
+		if (isEmpty(session().getAttribute("sessionChwName1")))
+			return false;
+		if (isEmpty(session().getAttribute("sessionNecName")))
+			return false;
+		// seems like all the session attribute are present
+		return true;
+	}
+
+	private static boolean isEmpty(Object attribute) {
+		if (attribute instanceof String && attribute != null && !"".equals((String) attribute)) {
+			return false;
+		}
+		return true;
+	}
+
+
+	public static HttpSession session() {
+	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+	    return attr.getRequest().getSession(false);
+	}
 }

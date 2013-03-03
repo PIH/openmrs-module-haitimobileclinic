@@ -6,9 +6,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
 import org.openmrs.User;
+import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.util.OpenmrsConstants;
+import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.web.controller.PseudoStaticContentController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,10 +41,13 @@ public class DataEntryDefaultsController {
 			@RequestParam String sessionChwName3,
 			@RequestParam String sessionNecName, 
 			ModelMap model) {
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
 		// take form values and store into session
 		model.addAttribute("sessionDate", sessionDate);
 		model.addAttribute("sessionLocation", stateProvince
 				+ "|" + cityVillage + "|" + address3 + "|" + address1);
+		// TODO: would be nice to get the address_hierarchy_id as well, but don't know how to easily get it...
 		model.addAttribute("sessionCoordinates", sessionCoordinates);
 		model.addAttribute("sessionStaticLocationName", sessionStaticLocationName);
 		model.addAttribute("sessionStaticLocation", sessionStaticLocation);
@@ -55,6 +60,8 @@ public class DataEntryDefaultsController {
 
 	@RequestMapping(value = "/module/haitimobileclinic/dataEntryDefaults.form", method = RequestMethod.GET)
 	public void initDataEntryDefaults(ModelMap model) {
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
 		// update user profile with static location from globalproperty default_location
 		Location loc = Context.getLocationService().getLocation(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME));
 		

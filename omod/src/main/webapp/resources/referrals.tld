@@ -39,6 +39,18 @@
 
 	<tag>
 		<description></description>
+		<name>age</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.AgeTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>patientId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
 		<name>site</name>
 		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.SiteTag</tag-class>
 		<body-content>empty</body-content>
@@ -106,6 +118,18 @@
 		<description></description>
 		<name>mobileVisitDate</name>
 		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.MobileVisitDateTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>referralEncounterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description></description>
+		<name>confirmativeTbDate</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.ConfirmativeTbDateTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>referralEncounterId</name>

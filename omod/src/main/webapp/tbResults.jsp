@@ -6,17 +6,19 @@
 <script src="/openmrs/moduleResources/htmlformentry/htmlFormEntry.js" type="text/javascript"></script>
 
 <script>
-function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1Date, sputumResult2, sputumResult2Date, sputumResult3, sputumResult3Date, status, statusDate, existingResultEncounterId) {	
+function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1Date, sputumResult2, sputumResult2Date, sputumResult3, sputumResult3Date, ppdResult, ppdResultDate, status, statusDate, existingResultEncounterId) {	
 	$j.post(
 			 '/openmrs/module/haitimobileclinic/saveTbResult.form',
 			 { 'tbSuspectEncounterId': tbSuspectEncounterId, 'existingResultEncounterId': existingResultEncounterId,
 				 'sputumResult1': sputumResult1, 'sputumResult1Date': sputumResult1Date, 
 				 'sputumResult2': sputumResult2, 'sputumResult2Date': sputumResult2Date, 
 				 'sputumResult3': sputumResult3, 'sputumResult3Date': sputumResult3Date, 
+				 'ppdResult': ppdResult, 'ppdResultDate': ppdResultDate,
 				 'status': status, 'statusDate': statusDate },
 			 function (data) {
-						//fieldToUpdate.empty();
-						//fieldToUpdate.html(data);
+				 fieldToUpdate.fadeOut(1000, function() {
+					  fieldToUpdate.fadeIn(1000);
+					});
 		  		}
 		);
 	}
@@ -38,7 +40,8 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 									<th>CHW names</th>
 									<th>NEC name</th>
 									<th>Screening visit</th>
-									<th>TB Result and status</th>
+									<th>Age</th>
+									<th>TB Results and status</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -65,12 +68,14 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 										<td><referrals:chwNames referralEncounterId="${tbSuspectEncounterId}"/></td>
 										<td><referrals:necName referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${tbSuspectEncounterId}" /></td>
+										<td><referrals:age patientId="${patientId}" /></td>
 										<td><span id='span-${patientId}'><tbSuspect:tbResultAndStatus tbSuspectEncounterId="${tbSuspectEncounterId}" /></span></td>
 										<td>
-											<a id='save-${patientId}' href="javascript:save($j('#span-${patientId}'), ${tbSuspectEncounterId},
+											<a id='save-${patientId}' href="javascript:save($j('#save-${patientId}'), ${tbSuspectEncounterId},
 												$j('#sputum1-${patientId}').val(), $j('#sputumdate1-${patientId}').val(), 
 												$j('#sputum2-${patientId}').val(), $j('#sputumdate2-${patientId}').val(), 
 												$j('#sputum3-${patientId}').val(), $j('#sputumdate3-${patientId}').val(), 
+												$j('#ppd-${patientId}').val(), $j('#ppddate-${patientId}').val(), 
 												$j('#status-${patientId}').val(), $j('#statusdate-${patientId}').val(),
 												$j('#resultEncounterId-${patientId}').val());">Save</a>
 										</td>

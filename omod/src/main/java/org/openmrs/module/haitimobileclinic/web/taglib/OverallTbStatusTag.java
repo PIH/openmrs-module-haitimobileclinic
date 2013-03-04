@@ -19,7 +19,7 @@ import org.openmrs.Obs;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
-import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.haitimobileclinic.util.LookupHelper;
 
 public class OverallTbStatusTag extends TagSupport {
 
@@ -45,10 +45,10 @@ public class OverallTbStatusTag extends TagSupport {
 						.parseInt(getTbSuspectEncounterId());
 				Encounter e = Context.getEncounterService().getEncounter(
 						encounterId);
-				Encounter tbResult = HaitiMobileClinicWebUtil.getMatchingTbResultsEncounter(e, null);
+				Encounter tbResult = LookupHelper.getMatchingTbResultsEncounter(e, null);
 
 				if (tbResult != null){
-					Iterator<Obs> obses = getObsesFromEncounter(tbResult, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS))).iterator();
+					Iterator<Obs> obses = getObsesFromEncounter(tbResult, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS))).iterator();
 					if (obses.hasNext()) {
 						Obs obs = (Obs) obses.next();
 						o.write(displayValue(tbResult, obs));
@@ -77,7 +77,7 @@ public class OverallTbStatusTag extends TagSupport {
 
 	private String displayValue(Encounter tbResult, Obs obs) throws IOException {
 		DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
-		String d = df.format(getObsesFromEncounter(tbResult, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE))).get(0).getValueDate());
+		String d = df.format(getObsesFromEncounter(tbResult, Arrays.asList(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS_DATE))).get(0).getValueDate());
 		return obs.getValueCoded().getName().getName() + " (" + d + ")";
 	}
 

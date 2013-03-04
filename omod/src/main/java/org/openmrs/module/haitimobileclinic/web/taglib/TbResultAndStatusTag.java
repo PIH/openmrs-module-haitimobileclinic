@@ -15,10 +15,11 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
-import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.haitimobileclinic.util.LookupHelper;
 import org.openmrs.module.htmlformentry.FormEntryContext;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
 import org.openmrs.module.htmlformentry.widget.Widget;
@@ -45,7 +46,7 @@ public class TbResultAndStatusTag extends TagSupport {
 			if (!"".equals(getTbSuspectEncounterId())) {
 				Integer encounterId = Integer.parseInt(getTbSuspectEncounterId());
 				Encounter e = Context.getEncounterService().getEncounter(encounterId);
-				Encounter tbResult = HaitiMobileClinicWebUtil.getMatchingTbResultsEncounter(e, null);
+				Encounter tbResult = LookupHelper.getMatchingTbResultsEncounter(e, null);
 
 				// sputum 1
 				Obs s1Obs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_1)));
@@ -65,27 +66,41 @@ public class TbResultAndStatusTag extends TagSupport {
 				Obs s3ObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_SPUTUM_RESULT_DATE_3)));
 				String s3Date = dateInput(s3ObsDate, e.getPatientId(), "sputumdate3");
 
+				// ppd
+				Obs ppdObs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_PPD_RESULT)));
+				String ppd = inputResultPpd(ppdObs, e.getPatientId(), "ppd");
+				Obs ppdObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_PPD_RESULT_DATE)));
+				String ppdDate = dateInput(ppdObsDate, e.getPatientId(), "ppddate");
+
 				// overall status
-				Obs statusObs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS)));
+				Obs statusObs = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS)));
 				String status = inputStatus(statusObs, e.getPatientId(), "status");
-				Obs statusObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE)));
+				Obs statusObsDate = getObsFromEncounter(tbResult, (Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS_DATE)));
 				String statusDate = dateInput(statusObsDate, e.getPatientId(), "statusdate");
 
 				o.write("<table><tr>");
-				o.write("<td>" + s1 + "</td>");
-				o.write("<td>" + s2 + "</td>");
-				o.write("<td>" + s3 + "</td>");
-				o.write("<td>" + status + "</td>");
-				if (tbResult != null) {
-					DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
-					o.write("<td rowspan='2'><a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + tbResult.getEncounterId() + "'>" + df.format(e.getEncounterDatetime()) + "</a></td>");
+				if (ppdRequired(e.getPatient())) {
+					o.write("<td>" + ppd + "</td>");
 				} else {
-					o.write("<td rowspan='2'></td>");
+					o.write("<td>" + s1 + "</td>");
+					o.write("<td>" + s2 + "</td>");
+					o.write("<td>" + s3 + "</td>");
 				}
+				o.write("<td>" + status + "</td>");
+//				if (tbResult != null) {
+//					DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
+//					o.write("<td rowspan='2'><a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + tbResult.getEncounterId() + "'>" + df.format(e.getEncounterDatetime()) + "</a></td>");
+//				} else {
+					o.write("<td rowspan='2'></td>");
+//				}
 				o.write("</tr><tr>");
-				o.write("<td>" + s1Date + "</td>");
-				o.write("<td>" + s2Date + "</td>");
-				o.write("<td>" + s3Date + "</td>");
+				if (ppdRequired(e.getPatient())) {
+					o.write("<td>" + ppdDate + "</td>");
+				} else {
+					o.write("<td>" + s1Date + "</td>");
+					o.write("<td>" + s2Date + "</td>");
+					o.write("<td>" + s3Date + "</td>");
+				}
 				o.write("<td>" + statusDate + "<input type='hidden' name='resultEncounterId' id='resultEncounterId-"+ e.getPatientId() + "' value='" + (tbResult != null ? tbResult.getEncounterId() : "") + "'></td>");
 				o.write("</tr></table>");
 			} else {
@@ -105,13 +120,17 @@ public class TbResultAndStatusTag extends TagSupport {
 		return SKIP_BODY;
 	}
 
+	private boolean ppdRequired(Patient patient) {
+		return patient.getAge() <= 5;
+	}
+
 	private String inputStatus(Obs obs, Integer patientId, String field) {
 		String id = field + "-" + patientId;
 		String s = "";
 		s += "<select id='"+ id + "' name='" + field + "'>";
 		s += "<option value='' " + ((obs == null) ? " selected='true'" : "" ) + "></option>";
-		s += "<option value='6780' " + ((obs != null && obs.getValueCoded().getConceptId() == 6780) ? " selected='true'" : "" ) + ">Confirmed</option>";
-		s += "<option value='6781' " + ((obs != null && obs.getValueCoded().getConceptId() == 6781) ? " selected='true'" : "" ) + ">Not confirmed</option>";
+		s += "<option value='703' " + ((obs != null && obs.getValueCoded().getConceptId() == 703) ? " selected='true'" : "" ) + ">Positive</option>";
+		s += "<option value='664' " + ((obs != null && obs.getValueCoded().getConceptId() == 664) ? " selected='true'" : "" ) + ">Negative</option>";
 		s += "</select>";
 		return s;
 	}
@@ -125,6 +144,17 @@ public class TbResultAndStatusTag extends TagSupport {
 		s += "<option value='6774' " + ((obs != null && obs.getValueCoded().getConceptId() == 6774) ? " selected='true'" : "" ) + ">+</option>";
 		s += "<option value='6775' " + ((obs != null && obs.getValueCoded().getConceptId() == 6775) ? " selected='true'" : "" ) + ">++</option>";
 		s += "<option value='6776' " + ((obs != null && obs.getValueCoded().getConceptId() == 6776) ? " selected='true'" : "" ) + ">+++</option>";
+		s += "</select>";
+		return s;
+	}
+
+	private String inputResultPpd(Obs obs, Integer patientId, String field) {
+		String id = field + "-" + patientId;
+		String s = "";
+		s += "<select id='"+ id + "' name='" + field + "'>";
+		s += "<option value='' " + ((obs == null) ? " selected='true'" : "" ) + "></option>";
+		s += "<option value='6790' " + ((obs != null && obs.getValueCoded().getConceptId() == 6790) ? " selected='true'" : "" ) + ">&lt; 5 mm</option>";
+		s += "<option value='6789' " + ((obs != null && obs.getValueCoded().getConceptId() == 6789) ? " selected='true'" : "" ) + ">&gt;= 5 mm</option>";
 		s += "</select>";
 		return s;
 	}

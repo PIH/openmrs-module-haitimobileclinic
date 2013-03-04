@@ -9,7 +9,7 @@
 			<td><a href="/openmrs/module/haitimobileclinic/referrals.form?enrollmentReason=HIV">HIV</a><br/></td>
 		</tr>
 		<tr>
-			<td><a href="/openmrs/module/haitimobileclinic/referrals.form?enrollmentReason=TB">TB</a><br/></td>
+			<td><a href="/openmrs/module/haitimobileclinic/referralsTb.form">TB</a><br/></td>
 		</tr>
 		<tr>
 			<td><a href="/openmrs/module/haitimobileclinic/referrals.form?enrollmentReason=Malnutrition">Malnutrition</a></td>

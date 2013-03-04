@@ -14,6 +14,7 @@ import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.haitimobileclinic.util.LookupHelper;
 import org.openmrs.module.haitimobileclinic.web.taglib.DateWidgetWrapper;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.PrivilegeConstants;
@@ -38,11 +39,29 @@ public class ReferralsController {
 			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
 
 		// find obs with matching referral reason
-		Set<Integer> patientIds = HaitiMobileClinicWebUtil.patientIdsWithPendingReferrals(enrollmentReason, toDate);
+		Set<Integer> patientIds = LookupHelper.patientIdsWithPendingReferrals(enrollmentReason, toDate);
 		
 //		Cohort cohort = Context.getPatientSetService().getAllPatients();
 		Cohort cohort = new Cohort("referrals", "referrals", patientIds);
 		mav.getModelMap().addAttribute("enrollmentReason", enrollmentReason);
+		mav.getModelMap().addAttribute("cohort", cohort);
+		mav.getModelMap().addAttribute("memberIds", cohort.getMemberIds());
+		return mav;
+	}
+
+	@RequestMapping(value = "/module/haitimobileclinic/referralsTb.form", method = RequestMethod.GET)
+	public ModelAndView referralsTb(@RequestParam(required = false) String locationId, @RequestParam(required = false) Date fromDate, @RequestParam(required = false) Date toDate,
+			ModelAndView mav) {
+		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
+			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
+
+		// find obs with matching referral reason
+		Set<Integer> patientIds = LookupHelper.patientIdsWithConfirmativeTbAndPendingReferrals(toDate);
+		
+//		Cohort cohort = Context.getPatientSetService().getAllPatients();
+		Cohort cohort = new Cohort("referrals", "referrals", patientIds);
 		mav.getModelMap().addAttribute("cohort", cohort);
 		mav.getModelMap().addAttribute("memberIds", cohort.getMemberIds());
 		return mav;
@@ -66,7 +85,7 @@ public class ReferralsController {
 			
 			Obs o = new Obs();
 			o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_REFERRAL_REASON));
-			o.setValueCoded(HaitiMobileClinicWebUtil.referralReasonAnswer(enrollmentReason));
+			o.setValueCoded(LookupHelper.referralReasonAnswer(enrollmentReason));
 			o.setEncounter(enrollmentEncounter);
 			enrollmentEncounter.addObs(o);
 			enrollmentEncounter = Context.getEncounterService().saveEncounter(enrollmentEncounter);

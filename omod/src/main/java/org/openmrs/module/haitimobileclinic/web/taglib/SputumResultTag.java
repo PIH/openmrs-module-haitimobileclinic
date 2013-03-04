@@ -19,7 +19,7 @@ import org.openmrs.Obs;
 import org.openmrs.Person;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
-import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.haitimobileclinic.util.LookupHelper;
 
 public class SputumResultTag extends TagSupport {
 
@@ -55,7 +55,7 @@ public class SputumResultTag extends TagSupport {
 						.parseInt(getTbSuspectEncounterId());
 				Encounter e = Context.getEncounterService().getEncounter(
 						encounterId);
-				Encounter tbResult = HaitiMobileClinicWebUtil.getMatchingTbResultsEncounter(e, null);
+				Encounter tbResult = LookupHelper.getMatchingTbResultsEncounter(e, null);
 				
 				if (tbResult != null) {
 					Concept result = null;

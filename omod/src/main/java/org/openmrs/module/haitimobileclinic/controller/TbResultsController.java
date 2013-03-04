@@ -2,19 +2,29 @@ package org.openmrs.module.haitimobileclinic.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Cohort;
 import org.openmrs.Encounter;
+import org.openmrs.EncounterType;
+import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Obs;
+import org.openmrs.Patient;
+import org.openmrs.Provider;
+import org.openmrs.Visit;
+import org.openmrs.VisitType;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.haitimobileclinic.HaitiMobileClinicConstants;
 import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
+import org.openmrs.module.haitimobileclinic.util.LookupHelper;
 import org.openmrs.module.haitimobileclinic.web.taglib.DateWidgetWrapper;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.PrivilegeConstants;
@@ -45,7 +55,7 @@ public class TbResultsController {
 			loc = Context.getLocationService().getLocation(locationId);
 		}
 
-		Set<Integer> patientIds = HaitiMobileClinicWebUtil.patientIdsWithPendingReferrals("tb", toDate);
+		Set<Integer> patientIds = LookupHelper.patientIdsWithPendingReferrals("tb", toDate);
 		
 //		Cohort cohort = Context.getPatientSetService().getAllPatients();
 		Cohort cohort = new Cohort("referrals", "referrals", patientIds);
@@ -56,9 +66,10 @@ public class TbResultsController {
 
 	@RequestMapping(value = "/module/haitimobileclinic/saveTbResult.form", method = RequestMethod.POST)
 	public @ResponseBody String save(@RequestParam String tbSuspectEncounterId, @RequestParam String existingResultEncounterId,
-			@RequestParam String sputumResult1, @RequestParam String sputumResult1Date,
-			@RequestParam String sputumResult2, @RequestParam String sputumResult2Date,
-			@RequestParam String sputumResult3, @RequestParam String sputumResult3Date,
+			@RequestParam(required = false) String sputumResult1, @RequestParam(required = false)  String sputumResult1Date,
+			@RequestParam(required = false)  String sputumResult2, @RequestParam(required = false)  String sputumResult2Date,
+			@RequestParam(required = false)  String sputumResult3, @RequestParam(required = false)  String sputumResult3Date,
+			@RequestParam(required = false)  String ppdResult, @RequestParam(required = false)  String ppdResultDate,
 			@RequestParam String status, @RequestParam String statusDate) {
 		try {
 			if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
@@ -71,7 +82,15 @@ public class TbResultsController {
 			if (existingResultEncounterId != null && !"".equals(existingResultEncounterId)) {
 				existingResultEncounter = Context.getEncounterService().getEncounter(Integer.parseInt(existingResultEncounterId));
 			} else {
-				existingResultEncounter = new Encounter();
+				// no existing result encounter specified, check if there is already one and take it
+				List<Encounter> encounters = Context.getEncounterService().getEncounters(referralEncounter.getPatient(), referralEncounter.getLocation(), referralEncounter.getEncounterDatetime(), null,
+				        null, Arrays.asList(Context.getEncounterService().getEncounterType(HaitiMobileClinicConstants.ENCOUNTER_TYPE_ID_TB_RESULTS)), null,
+				        null, null, false);
+				if (encounters.isEmpty()) {
+					existingResultEncounter = new Encounter();
+				} else {
+					existingResultEncounter = encounters.get(encounters.size() - 1);
+				}
 			}
 			existingResultEncounter.setPatient(referralEncounter.getPatient());
 			existingResultEncounter.setProvider(Context.getProviderService().getProvider(HaitiMobileClinicConstants.UNKNOWN_PROVIDER_ID).getPerson());
@@ -130,16 +149,30 @@ public class TbResultsController {
 				o.setEncounter(existingResultEncounter);
 				existingResultEncounter.addObs(o);
 			}
+			if (!isEmpty(ppdResult)) {
+				o = new Obs();
+				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_PPD_RESULT));
+				o.setValueCoded(Context.getConceptService().getConcept(Integer.parseInt(ppdResult)));
+				o.setEncounter(existingResultEncounter);
+				existingResultEncounter.addObs(o);
+			}
+			if (!isEmpty(ppdResultDate)) {
+				o = new Obs();
+				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_PPD_RESULT_DATE));
+				o.setValueDate(DateWidgetWrapper.parseDate(ppdResultDate));
+				o.setEncounter(existingResultEncounter);
+				existingResultEncounter.addObs(o);
+			}
 			if (!isEmpty(status)) {
 				o = new Obs();
-				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS));
+				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS));
 				o.setValueCoded(Context.getConceptService().getConcept(Integer.parseInt(status)));
 				o.setEncounter(existingResultEncounter);
 				existingResultEncounter.addObs(o);
 			}
 			if (!isEmpty(statusDate)) {
 				o = new Obs();
-				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_OVERALL_TB_STATUS_DATE));
+				o.setConcept(Context.getConceptService().getConcept(HaitiMobileClinicConstants.CONCEPT_ID_CONFIRMATIVE_TB_STATUS_DATE));
 				o.setValueDate(DateWidgetWrapper.parseDate(statusDate));
 				o.setEncounter(existingResultEncounter);
 				existingResultEncounter.addObs(o);

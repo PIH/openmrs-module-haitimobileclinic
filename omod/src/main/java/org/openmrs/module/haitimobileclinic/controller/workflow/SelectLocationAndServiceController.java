@@ -48,6 +48,9 @@ public class SelectLocationAndServiceController {
 	public ModelAndView showSetEncounterTypeAndLocation(Model model, HttpSession session) {
 		HaitiMobileClinicWebUtil.setTimeout(session);
 		
+		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
+			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
+
 		List<String> tasks = HaitiMobileClinicGlobalProperties.GLOBAL_PROPERTY_SUPPORTED_TASKS();
 		for (Iterator<String> i = tasks.iterator(); i.hasNext();) {
 			String task = i.next();

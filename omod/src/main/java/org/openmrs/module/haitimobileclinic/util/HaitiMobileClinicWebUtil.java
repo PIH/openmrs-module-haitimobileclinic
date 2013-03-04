@@ -781,8 +781,6 @@ public class HaitiMobileClinicWebUtil {
 	public static boolean hasDefaultsBeenSet() {
 		if (isEmpty(session().getAttribute("sessionDate")))
 			return false;
-		if (isEmpty(session().getAttribute("sessionCoordinates")))
-			return false;
 		if (isEmpty(session().getAttribute("sessionStaticLocationName")))
 			return false;
 		if (isEmpty(session().getAttribute("sessionStaticLocation")))

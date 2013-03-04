@@ -82,10 +82,12 @@ public class HaitiMobileClinicConstants {
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_1 = 6777; 
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_2 = 6778; 
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_3 = 6779; 
-	public static final Integer CONCEPT_ID_OVERALL_TB_STATUS = 6782;
+	public static final Integer CONCEPT_ID_CONFIRMATIVE_TB_STATUS = 6782;
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_1 = 6783; 
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_2 = 6784; 
 	public static final Integer CONCEPT_ID_SPUTUM_RESULT_DATE_3 = 6785;
-	public static final Integer CONCEPT_ID_OVERALL_TB_STATUS_DATE = 6786;
-
+	public static final Integer CONCEPT_ID_CONFIRMATIVE_TB_STATUS_DATE = 6786;
+	public static final Integer CONCEPT_ID_PPD_RESULT = 6787; 
+	public static final Integer CONCEPT_ID_PPD_RESULT_DATE = 6788;
+	public static final Integer CONCEPT_ID_CONFIRMATIVE_TB_STATUS_POSITIVE = 703; 
 }

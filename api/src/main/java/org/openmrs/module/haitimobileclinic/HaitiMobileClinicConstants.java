@@ -69,7 +69,7 @@ public class HaitiMobileClinicConstants {
 	public static final String ACTIVITY_MOBILE_CLINIC_RECEPTION_ENCOUNTER_STARTED = "Mobile Clinic Reception Encounter Started";
 	public static final String ACTIVITY_MOBILE_CLINIC_RECEPTION_ENCOUNTER_COMPLETED = "Mobile Clinic Reception Encounter Completed";
 	
-	public static final Integer UNKNOWN_PROVIDER_ID = 2; 
+	public static final Integer UNKNOWN_PROVIDER_ID = 1; 
 	public static final Integer ENCOUNTER_TYPE_ID_MOBILE_CLINIC_CONSULTATION = 19; 
 	public static final Integer ENCOUNTER_TYPE_ID_STATIC_CLINIC_ENROLLMENT = 20; 
 	public static final Integer ENCOUNTER_TYPE_ID_TB_RESULTS = 21; 

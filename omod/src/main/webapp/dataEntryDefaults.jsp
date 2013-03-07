@@ -43,8 +43,7 @@
 			<tr>
 				<td>Clinic Date:</td>
 				<td>
-<!-- initialValue='${sessionDate}'/> -->
-					<referrals:datePicker id='sessionDate' initialValue='2013-03-03'/>
+					<referrals:datePicker id='sessionDate' initialValue='${sessionDate}'/>
 			</tr>
 			<tr>
 				<td>Clinic Location:</td>
@@ -114,12 +113,8 @@
 			<tr>
 				<td>CHW names:</td>
 				<td>
-				<!-- 
 				<input type="text" name="sessionChwName1"
 					id="sessionChwName1" size="25" value="${sessionChwName1}" />
-					-->
-				<input type="text" name="sessionChwName1"
-					id="sessionChwName1" size="25" value="c" />
 					 <input
 					type="text" name="sessionChwName2" id="sessionChwName2" size="25"
 					value="${sessionChwName2}" /> 
@@ -129,12 +124,12 @@
 			</tr>
 			<tr>
 				<td>NEC name:</td>
-				<!-- 
 				<td><input type="text" name="sessionNecName" id="sessionNecName"
 					size="25" value="${sessionNecName}" /></td>
-					-->
-				<td><input type="text" name="sessionNecName" id="sessionNecName"
-					size="25" value="n" /></td>
+			</tr>
+			<tr>
+				<td>Provider:</td>
+				<td>TODO</td>
 			</tr>
 			<tr />
 			<tr />

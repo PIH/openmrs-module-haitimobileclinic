@@ -77,7 +77,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 										<td>
 											<span id='enrollmentSpan-${referralEncounterId}'>
 												<referrals:datePicker id='staticVisitDate-${patientId}'/>
-												<a id='enroll-${patientId}' href="javascript:enroll($j('#enrollmentSpan-${referralEncounterId}'), ${referralEncounterId}, $j('#staticVisitDate-${patientId}').val(), '${enrollmentReason}');">Enroll</a>
+												<a id='enroll-${patientId}' href="javascript:enroll($j('#enrollmentSpan-${referralEncounterId}'), ${referralEncounterId}, $j('#staticVisitDate-${patientId}').val(), 'tb');">Enroll</a>
 											</span>
 										</td>
 									</tr>

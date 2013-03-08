@@ -129,7 +129,9 @@
 			</tr>
 			<tr>
 				<td>Provider:</td>
-				<td>TODO</td>
+				<td>					<input type="text"
+					name="sessionProvider" id="sessionProvider" size="25"
+					value="${sessionProvider}" /></td>
 			</tr>
 			<tr />
 			<tr />

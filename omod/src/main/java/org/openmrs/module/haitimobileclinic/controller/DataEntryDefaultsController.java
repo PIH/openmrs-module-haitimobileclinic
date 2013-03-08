@@ -5,10 +5,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
+import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.haitimobileclinic.util.HaitiMobileClinicWebUtil;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.web.controller.PseudoStaticContentController;
@@ -20,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @SessionAttributes({ "sessionDate", "sessionLocation", "sessionCoordinates", "sessionStaticLocation",
-	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
+	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName", "sessionProvider", "sessionProviderName" })
 @Controller
 public class DataEntryDefaultsController {
 
@@ -40,6 +42,7 @@ public class DataEntryDefaultsController {
 			@RequestParam String sessionChwName2,
 			@RequestParam String sessionChwName3,
 			@RequestParam String sessionNecName, 
+			@RequestParam String sessionProvider, 
 			ModelMap model) {
 		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
 			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
@@ -75,7 +78,11 @@ public class DataEntryDefaultsController {
 		PseudoStaticContentController.invalidateCachedResources(properties);
 		Context.refreshAuthenticatedUser();
 
-		model.addAttribute("sessionStaticLocation", loc);
+		model.addAttribute("sessionStaticLocation", loc.getLocationId());
 		model.addAttribute("sessionStaticLocationName", loc.getName());
+		
+		Provider p = Context.getProviderService().getProvider(1);
+		model.addAttribute("sessionProviderName", p.getPerson().getFamilyName() + " " + p.getPerson().getGivenName());
+		model.addAttribute("sessionProvider", p.getProviderId());
 	}
 }

@@ -687,6 +687,8 @@ public class HaitiMobileClinicWebUtil {
 			return false;
 		if (isEmpty(session().getAttribute("sessionNecName")))
 			return false;
+//		if (isEmpty(session().getAttribute("sessionProvider")))
+//			return false;
 		// seems like all the session attribute are present
 		return true;
 	}

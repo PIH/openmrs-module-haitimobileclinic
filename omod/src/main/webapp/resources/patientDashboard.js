@@ -8,7 +8,7 @@ $j(document).ready(function(){
 	$j('#checkmark-yellow').focus();
 	
 	
-	
+	/*
 	if(cardPrintedLastDate.length>0){
 		$j("#lastStatusLabel").text(statusLabel);
 		$j("#lastStatusDate").text(statusDateValue);	
@@ -23,7 +23,7 @@ $j(document).ready(function(){
 		var labelMessage = $j.sprintf( cardCounterMessage, parseInt(cardPrintedCounter,10));
 		$j("#printingCounterLabel").text(labelMessage);
 	}
-	
+	*/
 	
 	$j("#dialog-confirm").hide();
 	$j("#dialog-confirm").css("visibility", "hidden");

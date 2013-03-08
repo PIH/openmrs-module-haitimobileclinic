@@ -290,11 +290,12 @@ public class HibernateHaitiMobileClinicDAO implements HaitiMobileClinicDAO {
 					if(fieldValue!=null){
 						duplicatePatient.setZlEmrId(fieldValue.toString());
 					}
+					// mobile clinics doesnt have this
+//					fieldValue = row.get(9); 
+//					if(fieldValue!=null){
+//						duplicatePatient.setDossierNumber(fieldValue.toString());
+//					}
 					fieldValue = row.get(9); 
-					if(fieldValue!=null){
-						duplicatePatient.setDossierNumber(fieldValue.toString());
-					}
-					fieldValue = row.get(10); 
 					if(fieldValue!=null){
 						try {
 							date = sdf.parse(fieldValue.toString());

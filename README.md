@@ -1,6 +1,3 @@
-openmrs-module-haitimobileclinic
-================================
-
 Lightweight data entry based on OpenMRS to support mobile clinics in Haiti.
 
 Introduction
@@ -12,16 +9,21 @@ A couple of additional and introductionary documents are available under https:/
 
 Using sync to keep all these system up to date was considered at one point, but abandoned for system complexity. Instead remote access through Internet is envisioned, but details (logistically and technically) have not yet been defined.
 
-haitimobileclinic overview
---------------------------
+Module overview
+---------------
 
-Parts of this module is forked from the patientregistration module. The Point of Care patientregistration was adapted to the needs of the mobile clinic patient registration. Additionally retrospective data entry components are implemented on top of 'vanilla OpenMRS'.
+Parts of this module is forked from the patientregistration module. The Point of Care patientregistration was adapted to the needs of the mobile clinic patient registration. During the 'fork' the module and paths have been renamed from patientregistration to haitimobileclinic to to reflect and keep the changes separate. Additionally retrospective data entry components are implemented on top of 'vanilla OpenMRS'.
+
+System components
 - HTML Forms
 - OpenMRS patient dashboard portlet to enable 'quick access' to HTML forms
 - Custom JSP pages and with some JSP tags to provide a register-like and partially editable list of patients
 - OpenMRS customization (CSS, pihhaiti module)
 - OpenMRS configs
 - Reports
+- Various scripts for backup/restore, remote updates, ... are stored under https://github.com/PIH/openmrs-module-haitimobileclinic-tools
+
+A list of required changes/additions to the Global Properties is appended at the Installation Guide.docx.
 
 Development environment
 -----------------------
@@ -30,18 +32,20 @@ A default OpenMRS development environment is required to make changes to the Ope
 
 Current versions of OpenMRS and modules
 ---------------------------------------
-OpenMRS 1.9.2 Build e9813c
-addresshierarchy-2.2.8.omod
-calculation-1.0.omod
-htmlformentry-2.0.4.omod
-htmlwidgets-1.6.2.omod
-idgen-2.3.omod
-namephonetics-1.3.2.omod
-pihhaiti-1.3.6-SNAPSHOT.omod
-reporting-0.7.6-SNAPSHOT-without-log4j.omod
-reportingcompatibility-1.5.8.omod
-serialization.xstream-0.2.7.omod
-validation-1.0.1.omod
+
+This module is build against OpenMRS 1.9.2 Build e9813c and based on these additional modules. The current set can be found under https://github.com/PIH/openmrs-module-haitimobileclinic-tools/tree/master/modules .
+
+- addresshierarchy-2.2.8.omod
+- calculation-1.0.omod
+- htmlformentry-2.0.4.omod
+- htmlwidgets-1.6.2.omod
+- idgen-2.3.omod
+- namephonetics-1.3.2.omod
+- pihhaiti-1.3.6-SNAPSHOT.omod
+- reporting-0.7.6-SNAPSHOT-without-log4j.omod
+- reportingcompatibility-1.5.8.omod
+- serialization.xstream-0.2.7.omod
+- validation-1.0.1.omod
 
 Metadata
 --------

@@ -87,6 +87,9 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 			</div>
 		</div>
 	</div>
+	<br>	
+	<input type="button" onClick="window.print()" value="Print"/>
+  	<br>
 	<br>
 	&nbsp;
 	<br>

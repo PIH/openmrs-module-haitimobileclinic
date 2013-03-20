@@ -29,8 +29,9 @@
 
 		// value for the selection list is the current value for the field (if one exist), otherwise the default value (if one exists)
 		// only display selection this for list level if a) the previous level in the hierarchy has a value, b) the level itself has a value, or c) this is the top level in the hierarchy
-		updateOptions($j('select[name=stateProvince]'), "Haiti|", ""); // use double quotes here so as not conflict with ' in location names			
-
+		updateOptions($j('select[name=stateProvince]'), "Haiti|", ""); // use double quotes here so as not conflict with ' in location names
+		
+		// todo, here someone should prepopulate the comboboxes so that already select locations are shown again
 	});
 </script>
 

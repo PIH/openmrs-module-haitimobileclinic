@@ -1,14 +1,20 @@
 package org.openmrs.module.haitimobileclinic.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
+import org.openmrs.PersonAddress;
 import org.openmrs.User;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.addresshierarchy.AddressField;
+import org.openmrs.module.addresshierarchy.AddressHierarchyEntry;
+import org.openmrs.module.addresshierarchy.AddressHierarchyLevel;
+import org.openmrs.module.addresshierarchy.service.AddressHierarchyService;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.PrivilegeConstants;
 import org.openmrs.web.controller.PseudoStaticContentController;
@@ -19,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes({ "sessionDate", "sessionLocation", "sessionCoordinates", "sessionStaticLocation",
+@SessionAttributes({ "sessionDate", "sessionLocation", "sessionLocationAddressHierarchyId", "sessionCoordinates", "sessionStaticLocation",
 	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
 @Controller
 public class DataEntryDefaultsController {
@@ -45,9 +51,12 @@ public class DataEntryDefaultsController {
 			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
 		// take form values and store into session
 		model.addAttribute("sessionDate", sessionDate);
-		model.addAttribute("sessionLocation", stateProvince
-				+ "|" + cityVillage + "|" + address3 + "|" + address1);
-		// TODO: would be nice to get the address_hierarchy_id as well, but don't know how to easily get it...
+		String location = stateProvince + "|" + cityVillage + "|" + address3 + "|" + address1;
+		location = location.replace("null",  "");
+		model.addAttribute("sessionLocation", location);
+		AddressHierarchyEntry entry = findAddressHierarchyEntry(country, stateProvince, cityVillage, address3, address1);
+		model.addAttribute("sessionLocationAddressHierarchyId", entry == null ? "<not found>" : entry.getId());
+		
 		model.addAttribute("sessionCoordinates", sessionCoordinates);
 		model.addAttribute("sessionStaticLocationName", sessionStaticLocationName);
 		model.addAttribute("sessionStaticLocation", sessionStaticLocation);
@@ -56,6 +65,40 @@ public class DataEntryDefaultsController {
 		model.addAttribute("sessionChwName3", sessionChwName3);
 		model.addAttribute("sessionNecName", sessionNecName);
 		return "redirect:/";
+	}
+
+	private AddressHierarchyEntry findAddressHierarchyEntry(
+			String country, String stateProvince, String cityVillage,
+			String address3, String address1) {
+		PersonAddress pa = new PersonAddress();
+		pa.setCountry(country);
+		pa.setStateProvince(stateProvince);
+		pa.setCityVillage(cityVillage);
+		pa.setAddress3(address3);
+		pa.setAddress1(address1);
+		AddressHierarchyService ahs = Context.getService(AddressHierarchyService.class);
+		AddressHierarchyLevel level = null;
+		if (!isEmpty(country) && isEmpty(stateProvince)) {
+			level = ahs.getAddressHierarchyLevelByAddressField(AddressField.COUNTRY);
+		} else if (!isEmpty(stateProvince) && isEmpty(cityVillage)) {
+			level = ahs.getAddressHierarchyLevelByAddressField(AddressField.STATE_PROVINCE);
+		} else if (!isEmpty(cityVillage) && isEmpty(address3)) {
+			level = ahs.getAddressHierarchyLevelByAddressField(AddressField.CITY_VILLAGE);
+		} else if (!isEmpty(address3) && isEmpty(address1)) {
+			level = ahs.getAddressHierarchyLevelByAddressField(AddressField.ADDRESS_3);
+		} else if (!isEmpty(address1)) {
+			level = ahs.getAddressHierarchyLevelByAddressField(AddressField.ADDRESS_1);
+		}
+		List<AddressHierarchyEntry> entries = ahs.getPossibleAddressHierarchyEntries(pa, level);
+		if (entries.isEmpty()) {
+			return null;
+		} else {
+			return entries.get(0);
+		}
+	}
+
+	private boolean isEmpty(String string) {
+		return (string == null || "".equals(string));
 	}
 
 	@RequestMapping(value = "/module/haitimobileclinic/dataEntryDefaults.form", method = RequestMethod.GET)

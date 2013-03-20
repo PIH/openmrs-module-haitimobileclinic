@@ -41,6 +41,15 @@
 	<form method="post" action="dataEntryDefaults.form">
 		<table>
 			<tr>
+				<td>Static clinic (unchangeable):</td>c
+				<td>
+					<input type="text" name="sessionStaticLocationName" readonly
+						id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
+					<input type="hidden" name="sessionStaticLocation"
+						id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
+				</td>
+			</tr>
+			<tr>
 				<td>Clinic Date:</td>
 				<td>
 					<referrals:datePicker id='sessionDate' initialValue='${sessionDate}'/>
@@ -102,16 +111,7 @@
 					id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
 			</tr>
 			<tr>
-				<td>Static clinic (unchangeable):</td>c
-				<td>
-					<input type="text" name="sessionStaticLocationName" readonly
-						id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
-					<input type="hidden" name="sessionStaticLocation"
-						id="sessionStaticLocation" size="25" value="${sessionStaticLocation}" />
-				</td>
-			</tr>
-			<tr>
-				<td>CHW names:</td>
+				<td>CHW names (up to 3):</td>
 				<td>
 				<input type="text" name="sessionChwName1"
 					id="sessionChwName1" size="25" value="${sessionChwName1}" />
@@ -126,12 +126,6 @@
 				<td>NEC name:</td>
 				<td><input type="text" name="sessionNecName" id="sessionNecName"
 					size="25" value="${sessionNecName}" /></td>
-			</tr>
-			<tr>
-				<td>Provider:</td>
-				<td>					<input type="text"
-					name="sessionProvider" id="sessionProvider" size="25"
-					value="${sessionProvider}" /></td>
 			</tr>
 			<tr />
 			<tr />

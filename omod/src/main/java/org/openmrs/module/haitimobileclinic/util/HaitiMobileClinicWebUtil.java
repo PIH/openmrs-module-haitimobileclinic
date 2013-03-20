@@ -683,11 +683,9 @@ public class HaitiMobileClinicWebUtil {
 			return false;
 		if (isEmpty(session().getAttribute("sessionStaticLocation")))
 			return false;
-		if (isEmpty(session().getAttribute("sessionChwName1")))
-			return false;
-		if (isEmpty(session().getAttribute("sessionNecName")))
-			return false;
-//		if (isEmpty(session().getAttribute("sessionProvider")))
+//		if (isEmpty(session().getAttribute("sessionChwName1")))
+//			return false;
+//		if (isEmpty(session().getAttribute("sessionNecName")))
 //			return false;
 		// seems like all the session attribute are present
 		return true;

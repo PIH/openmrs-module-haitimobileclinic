@@ -35,6 +35,7 @@
 	var dossierNumberLabel= '<spring:message code="haitimobileclinic.menu.numero"/>'; 	
 	var firstEncounterDateLabel = '<spring:message code="haitimobileclinic.patient.firstEncounterDate"/>'; 	
 	var dentalDossierTypeId="${dentalDossier.identifierType.id}"
+	var mobileClinicDossierTypeId="${mobileClinicDossier.identifierType.id}"
 		
 	var duplicatePatientsData = [
 		<c:forEach var="duplicatePatient" items="${duplicatePatients}" varStatus="i">
@@ -199,7 +200,8 @@
 								</td>
 								<td width="3%">&nbsp;
 								</td>
-								<td width="17%">&nbsp;									
+								<td width="17%" class="leftalign">									
+									<button type="button" class="editPatientDemo" id="editMobileClinicDossier" />
 								</td>
 								<td width="3%">&nbsp;
 								</td>

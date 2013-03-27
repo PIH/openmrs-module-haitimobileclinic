@@ -26,6 +26,7 @@ public class HaitiMobileClinicConstants {
 	public static final String SESSION_TASK_PROGRESS = "task_progress";
 	public static final String NUMERO_DOSSIER = "numeroDossier";
 	public static final String DENTAL_DOSSIER = "dentalDossier";
+	public static final String MOBILE_CLINIC_DOSSIER = "mobileClinicDossier";
 	public static final String IDENTIFIER_TYPE_ID = "identifierTypeId";
 	public static final String IDENTIFIER_TYPE_NAME = "identifierTypeName";
 	public static final String RETROSPECTIVE_TASK = "retrospectiveEntry";

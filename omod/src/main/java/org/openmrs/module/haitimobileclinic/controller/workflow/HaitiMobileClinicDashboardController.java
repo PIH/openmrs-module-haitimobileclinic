@@ -120,6 +120,15 @@ public class HaitiMobileClinicDashboardController extends AbstractPatientDetails
 //				}
 //				model.addAttribute(HaitiMobileClinicConstants.DENTAL_DOSSIER, dossierIdentifier);
 //			}
+
+			identifierType = HaitiMobileClinicGlobalProperties.GLOBAL_PROPERTY_PRIMARY_IDENTIFIER_TYPE();
+			if(identifierType!=null){				
+				PatientIdentifier dossierIdentifier = HaitiMobileClinicUtil.getPrimaryIdentifier(patient); //, registrationLocation);
+				if(dossierIdentifier==null){
+					dossierIdentifier = new PatientIdentifier("",identifierType, registrationLocation);
+				}
+				model.addAttribute(HaitiMobileClinicConstants.MOBILE_CLINIC_DOSSIER, dossierIdentifier);
+			}
 			Encounter registrationEncounter = null;
 			if (StringUtils.isNotBlank(encounterName)){			
 				EncounterType encounterType = HaitiMobileClinicUtil.findEncounterType(Context.getAdministrationService().getGlobalProperty(HaitiMobileClinicConstants.MODULE_NAME + "." + encounterName));				

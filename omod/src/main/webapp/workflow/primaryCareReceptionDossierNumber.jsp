@@ -32,10 +32,12 @@
 					</c:otherwise>
 				</c:choose>
 			</td>	
-		</tr>		
+		</tr>
+		<!--  		
 		<tr>
 			<td class="menu" id="printDossierLabelMenu"><spring:message code="haitimobileclinic.menu.printDossierLabel"/></td>
 		</tr>
+		-->
 	</table>
 	</div>
 	<c:if test="${!empty identifierError}">

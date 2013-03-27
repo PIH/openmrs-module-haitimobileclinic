@@ -519,6 +519,10 @@ $j(document).ready(function(){
 		$j.goToNextPage(nextTask, '/module/haitimobileclinic/workflow/primaryCareReceptionDossierNumber.form?edit=true&patientId='+patientId+
 		'&identifierTypeId='+dentalDossierTypeId);
 	});
+	$j("#editMobileClinicDossier").click(function(event){
+		$j.goToNextPage(nextTask, '/module/haitimobileclinic/workflow/primaryCareReceptionDossierNumber.form?edit=true&patientId='+patientId+
+		'&identifierTypeId='+mobileClinicDossierTypeId);
+	});
 	
 	$j(".editDemoDiv").click(function(event){
 		var divId = this.id;		

@@ -322,7 +322,7 @@
         <input type="hidden" id="hiddenNextTask" name="hiddenNextTask" value="">
         <input type="hidden" id="hiddenRequestDossierNumber" name="hiddenRequestDossierNumber" value="">
     </form>
-    Yes, this is the confirm box.
+    <spring:message code="haitimobileclinic.taskItem.encounter.confirmDetails"/>
 </div>
 <div id="dialog-confirm" title='<spring:message code="haitimobileclinic.removeDiagnosis"/>?' class="padded hiddenDiv">
 </div>

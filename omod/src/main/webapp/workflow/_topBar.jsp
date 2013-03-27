@@ -33,13 +33,13 @@
 		<div class="partBar topBar">			
 			<table style="width:95%; height:100%; margin-bottom: auto; margin-right: auto;">
 				<tr class="whiteColor smallerFont">
-					<td style="width:30%; padding: 0px 20px 0px 20px;">
+					<td style="width:50%; padding: 0px 20px 0px 20px;">
 						<spring:message code="haitimobileclinic.tasks.patientRegistration"/>
 						<c:if test="${taskProgress.completedTasks['registrationTask'] ==1}">
 							<img id="registrationCompleteImg" src="${pageContext.request.contextPath}/moduleResources/haitimobileclinic/images/checkmark-green.png">
 						</c:if>
 					</td>					
-					<td style="width:30%; text-align: right; padding: 0px 40px 0px 0px;">
+					<td style="width:50%; text-align: right; padding: 0px 40px 0px 0px;">
 						<spring:message code="haitimobileclinic.tasks.mobileClinicReception"/>
 						<c:if test="${taskProgress.completedTasks['mobileClinicReception'] ==1}">
 							<img id="primaryCareVisitCompleteImg" src="${pageContext.request.contextPath}/moduleResources/haitimobileclinic/images/checkmark-green.png">

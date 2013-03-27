@@ -703,4 +703,53 @@ public class HaitiMobileClinicWebUtil {
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    return attr.getRequest().getSession(false);
 	}
+	
+	public static void addDataEntryDefaultsToEncounter(Encounter encounter, HttpSession session) {
+		addNecNameToEncounter(encounter, session);
+		addChwNamesToEncounter(encounter, session);
+		addLocationToEncounter(encounter, session);
+	}
+	
+	private static void addNecNameToEncounter(Encounter encounter, HttpSession session) {
+		 Obs o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionNecName")) ? session.getAttribute("sessionNecName").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6769));
+		 encounter.addObs(o);
+	}
+
+	private static void addChwNamesToEncounter(Encounter encounter, HttpSession session) {
+		 Obs o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionChwName1")) ? session.getAttribute("sessionChwName1").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6768));
+		 encounter.addObs(o);
+
+		 o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionChwName2")) ? session.getAttribute("sessionChwName2").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6770));
+		 encounter.addObs(o);
+
+		 o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionChwName3")) ? session.getAttribute("sessionChwName3").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6771));
+		 encounter.addObs(o);
+	}
+
+	private static void addLocationToEncounter(Encounter encounter, HttpSession session) {
+		 Obs o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionLocation")) ? session.getAttribute("sessionLocation").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6767));
+		 encounter.addObs(o);
+		 
+		 o = new Obs();
+		 o.setValueText(session.getAttribute("sessionLocationAddressHierarchyId") != null ? session.getAttribute("sessionLocationAddressHierarchyId").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6791));
+		 encounter.addObs(o);
+
+		 o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionCoordinates")) ? session.getAttribute("sessionCoordinates").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6772));
+		 encounter.addObs(o);
+	}
+
+
 }

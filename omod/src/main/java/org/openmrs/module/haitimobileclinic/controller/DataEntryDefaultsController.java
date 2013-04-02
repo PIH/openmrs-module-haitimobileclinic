@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @SessionAttributes({ "sessionDate", "sessionLocation", "sessionLocationAddressHierarchyId", "sessionCoordinates", "sessionStaticLocation",
-	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName" })
+	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName1", "sessionNecName2" })
 @Controller
 public class DataEntryDefaultsController {
 
@@ -45,7 +45,8 @@ public class DataEntryDefaultsController {
 			@RequestParam String sessionChwName1,
 			@RequestParam String sessionChwName2,
 			@RequestParam String sessionChwName3,
-			@RequestParam String sessionNecName, 
+			@RequestParam String sessionNecName1, 
+			@RequestParam String sessionNecName2, 
 			ModelMap model) {
 		if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS))
 			throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
@@ -63,7 +64,8 @@ public class DataEntryDefaultsController {
 		model.addAttribute("sessionChwName1", sessionChwName1);
 		model.addAttribute("sessionChwName2", sessionChwName2);
 		model.addAttribute("sessionChwName3", sessionChwName3);
-		model.addAttribute("sessionNecName", sessionNecName);
+		model.addAttribute("sessionNecName1", sessionNecName1);
+		model.addAttribute("sessionNecName2", sessionNecName2);
 		return "redirect:/";
 	}
 

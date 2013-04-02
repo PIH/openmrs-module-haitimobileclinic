@@ -685,7 +685,7 @@ public class HaitiMobileClinicWebUtil {
 			return false;
 //		if (isEmpty(session().getAttribute("sessionChwName1")))
 //			return false;
-//		if (isEmpty(session().getAttribute("sessionNecName")))
+//		if (isEmpty(session().getAttribute("sessionNecName1")))
 //			return false;
 		// seems like all the session attribute are present
 		return true;
@@ -698,24 +698,28 @@ public class HaitiMobileClinicWebUtil {
 		return true;
 	}
 
-
 	public static HttpSession session() {
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    return attr.getRequest().getSession(false);
 	}
 	
 	public static void addDataEntryDefaultsToEncounter(Encounter encounter, HttpSession session) {
-		addNecNameToEncounter(encounter, session);
+		addNecNamesToEncounter(encounter, session);
 		addChwNamesToEncounter(encounter, session);
 		addLocationToEncounter(encounter, session);
 	}
 	
-	private static void addNecNameToEncounter(Encounter encounter, HttpSession session) {
+	private static void addNecNamesToEncounter(Encounter encounter, HttpSession session) {
 		 Obs o = new Obs();
-		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionNecName")) ? session.getAttribute("sessionNecName").toString() : "<not set>");
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionNecName1")) ? session.getAttribute("sessionNecName1").toString() : "<not set>");
 		 o.setConcept(Context.getConceptService().getConcept(6769));
 		 encounter.addObs(o);
-	}
+
+		 o = new Obs();
+		 o.setValueText(StringUtils.isNotBlank((String) session.getAttribute("sessionNecName2")) ? session.getAttribute("sessionNecName2").toString() : "<not set>");
+		 o.setConcept(Context.getConceptService().getConcept(6795));
+		 encounter.addObs(o);
+}
 
 	private static void addChwNamesToEncounter(Encounter encounter, HttpSession session) {
 		 Obs o = new Obs();

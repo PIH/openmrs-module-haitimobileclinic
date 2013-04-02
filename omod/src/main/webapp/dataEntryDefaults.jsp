@@ -124,9 +124,11 @@
 					value="${sessionChwName3}" /></td>
 			</tr>
 			<tr>
-				<td>NEC name:</td>
-				<td><input type="text" name="sessionNecName" id="sessionNecName"
-					size="25" value="${sessionNecName}" /></td>
+				<td>NEC names (up to 2):</td>
+				<td><input type="text" name="sessionNecName1" id="sessionNecName2"
+					size="25" value="${sessionNecName1}" />
+					<input type="text" name="sessionNecName2" id="sessionNecName2"
+					size="25" value="${sessionNecName2}" /></td>
 			</tr>
 			<tr />
 			<tr />

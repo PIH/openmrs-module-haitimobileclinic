@@ -40,7 +40,7 @@ public class HaitiMobileClinicActivator implements ModuleActivator {
 
 	private Log log = LogFactory.getLog(this.getClass());
 
-	private String ADDRESS_HIERARCHY_CSV_FILE = "haiti_address_hierarchy_entries.csv";
+	private String ADDRESS_HIERARCHY_CSV_FILE = "haiti_address_hierarchy_entries_5.csv";
 
 	//private ConfigureIdGenerators configureIdGenerators;
 

@@ -29,10 +29,6 @@
 		<lang>fr</lang>
 		<file>messages_fr.properties</file>
 	</messages>
-	<messages>
-		<lang>ht</lang>
-		<file>messages_ht.properties</file>
-	</messages>
 	<!-- /Internationalization -->
 
 	<!-- Global properties -->

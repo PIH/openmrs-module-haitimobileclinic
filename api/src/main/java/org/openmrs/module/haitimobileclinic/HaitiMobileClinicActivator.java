@@ -45,7 +45,7 @@ public class HaitiMobileClinicActivator implements ModuleActivator {
 	//private ConfigureIdGenerators configureIdGenerators;
 
 	private void setupCoreGlobalProperties() {
-		setExistingGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST, "ht, fr, en");
+		setExistingGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST, "fr, en_US");
 	}
 
 	private void setupAddressHierarchy() {

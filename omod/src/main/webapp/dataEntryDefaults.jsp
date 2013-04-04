@@ -37,12 +37,12 @@
 
 <div align="center">
 	<br/><br/><br/>
-	Settings defaults for the current data entry session.
+	<spring:message code="haitimobileclinic.settingDefaults"/>
 	<br/><br/><br/>
 	<form method="post" action="dataEntryDefaults.form">
 		<table>
 			<tr>
-				<td>Static clinic (unchangeable):</td>c
+				<td><spring:message code="haitimobileclinic.staticClinicUnchangeable"/>:</td>c
 				<td>
 					<input type="text" name="sessionStaticLocationName" readonly
 						id="sessionStaticLocationName" size="25" value="${sessionStaticLocationName}" />
@@ -51,16 +51,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Clinic Date:</td>
+				<td><spring:message code="haitimobileclinic.clinicDate"/>:</td>
 				<td>
 					<referrals:datePicker id='sessionDate' initialValue='${sessionDate}'/>
 			</tr>
 			<tr>
-				<td>Clinic Location:</td>
+				<td><spring:message code="haitimobileclinic.clinicLocation"/>:</td>
 				<td>
 					<table class="address">
 						<tr>
-							<td>Country</td>
+							<td><spring:message code="haitimobileclinic.country"/></td>
 							<td><select style="display: none" name="country"
 								class="country"
 								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.stateProvince'));" />
@@ -69,7 +69,7 @@
 								class="other" /></td>
 						</tr>
 						<tr>
-							<td>Department</td>
+							<td><spring:message code="haitimobileclinic.department"/></td>
 							<td><select style="display: none" name="stateProvince"
 								class="stateProvince"
 								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.cityVillage'));" />
@@ -78,7 +78,7 @@
 								class="other" /></td>
 						</tr>
 						<tr>
-							<td>Commune</td>
+							<td><spring:message code="haitimobileclinic.commune"/></td>
 							<td><select style="display: none" name="cityVillage"
 								class="cityVillage"
 								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address3'));" />
@@ -87,7 +87,7 @@
 								class="other" /></td>
 						</tr>
 						<tr>
-							<td>Section Communale</td>
+							<td><spring:message code="haitimobileclinic.sectionCommunale"/></td>
 							<td><select style="display: none" name="address3"
 								class="address3"
 								onChange="handleAddressFieldChange($j(this), $j(this).closest('.address').find('.address1'));" />
@@ -96,7 +96,7 @@
 								class="other" /></td>
 						</tr>
 						<tr>
-							<td>Locality Habitation</td>
+							<td><spring:message code="haitimobileclinic.localityHabitation"/></td>
 							<td><select style="display: none" name="address1"
 								class="address1"
 								onChange="handleAddressFieldChange($j(this), '');" /></td>
@@ -107,12 +107,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td>GPS coordinates:</td>c
+				<td><spring:message code="haitimobileclinic.gpsCoordinates"/>:</td>c
 				<td><input type="text" name="sessionCoordinates"
 					id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
 			</tr>
 			<tr>
-				<td>CHW names (up to 3):</td>
+				<td><spring:message code="haitimobileclinic.chwNames3"/>:</td>
 				<td>
 				<input type="text" name="sessionChwName1"
 					id="sessionChwName1" size="25" value="${sessionChwName1}" />
@@ -124,7 +124,7 @@
 					value="${sessionChwName3}" /></td>
 			</tr>
 			<tr>
-				<td>NEC names (up to 2):</td>
+				<td><spring:message code="haitimobileclinic.necNames2"/>:</td>
 				<td><input type="text" name="sessionNecName1" id="sessionNecName2"
 					size="25" value="${sessionNecName1}" />
 					<input type="text" name="sessionNecName2" id="sessionNecName2"
@@ -133,7 +133,7 @@
 			<tr />
 			<tr />
 			<tr>
-				<td><input type="submit" value="Set defaults" /></td>
+				<td><input type="submit" value="<spring:message code="haitimobileclinic.setDefaults"/>" /></td>
 			</tr>
 	
 		</table>

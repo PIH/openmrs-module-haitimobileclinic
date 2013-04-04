@@ -20,7 +20,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 
 <div id="findPatient" class="portlet">
 	<div>
-		<b class="boxHeader">Pending enrollments for ${enrollmentReason}</b>
+		<b class="boxHeader"><spring:message code="haitimobileclinic.pendingEnrollmentsFor"/> ${enrollmentReason}</b>
 		<div class="box">
 			<div class="searchWidgetContainer" id="referrals">
 			<!-- 
@@ -39,14 +39,14 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 							style="width: 100%">
 							<thead id="searchTableHeader">
 								<tr>
-									<th>Name</th>
-									<th>Site</th>
+									<th><spring:message code="haitimobileclinic.name"/></th>
+									<th><spring:message code="haitimobileclinic.site"/></th>
 									<!-- <th>Reason for referral</th>-->
-									<th>CHW names</th>
-									<th>NEC names</th>
-									<th>Mobile Visit date</th>
-									<th>Confirmative TB date</th>
-									<th>Static Visit date</th>
+									<th><spring:message code="haitimobileclinic.chwNames"/></th>
+									<th><spring:message code="haitimobileclinic.necNames"/></th>
+									<th><spring:message code="haitimobileclinic.mobileVisitDate"/></th>
+									<th><spring:message code="haitimobileclinic.confirmativeTbDate"/></th>
+									<th><spring:message code="haitimobileclinic.staticVisitDate"/></th>
 								</tr>
 							</thead>
 							<c:forEach var="patientId" items="${memberIds}" varStatus="loopStatus">
@@ -92,9 +92,6 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 	<br>
 	&nbsp;
 	<br>
-	For HIV and Malnutrition:
-	Only patients with pending referrals are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and make sure the patient is not yet enrolled with a matching Static Clinic Enrollment.
-	<br><br>
 	For TB:
 	Only patients with pending referrals and a confirmed BT status are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and confirm the <a href="/openmrs/module/haitimobileclinic/tbResults.form">TB status</a> for this patient.  
 </div>

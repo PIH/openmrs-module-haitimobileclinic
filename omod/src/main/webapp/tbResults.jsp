@@ -26,7 +26,7 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 
 <div id="findPatient" class="portlet">
 	<div>
-		<b class="boxHeader">TB Status and Results</b>
+		<b class="boxHeader"><spring:message code="haitimobileclinic.tbResultsAndStatus"/></b>
 		<div class="box">
 			<div class="searchWidgetContainer" id="referrals">
 			<span class="openmrsSearchDiv" style="display: inline;">
@@ -35,13 +35,13 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 							style="width: 100%">
 							<thead id="searchTableHeader">
 								<tr>
-									<th>Name</th>
-									<th>Site</th>
-									<th>CHW names</th>
-									<th>NEC names</th>
-									<th>Screening visit</th>
-									<th>Age</th>
-									<th>TB Results and status</th>
+									<th><spring:message code="haitimobileclinic.name"/></th>
+									<th><spring:message code="haitimobileclinic.site"/></th>
+									<th><spring:message code="haitimobileclinic.chwNames"/></th>
+									<th><spring:message code="haitimobileclinic.necNames"/></th>
+									<th><spring:message code="haitimobileclinic.screeningVisit"/></th>
+									<th><spring:message code="haitimobileclinic.age"/></th>
+									<th><spring:message code="haitimobileclinic.tbResultsAndStatus"/></th>
 									<th></th>
 								</tr>
 							</thead>

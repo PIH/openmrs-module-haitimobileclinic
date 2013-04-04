@@ -6,21 +6,21 @@
 
 <table cellspacing="0" cellpadding="2">
 	<tr>
-		<td>Mobile Clinic Consultations:</td>
+		<td><spring:message code="haitimobileclinic.mobileClinicConsultations"/>:</td>
 		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='1'/></td>
 	</tr>
 	<tr>
 		<td><br /></td>
 	</tr>
 	<tr>
-		<td>Static Clinic Enrollments:</td>
+		<td><spring:message code="haitimobileclinic.staticClinicEnrollments"/>:</td>
 		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='3'/></td>
 	</tr>
 	<tr>
 		<td><br /></td>
 	</tr>
 	<tr>
-		<td>TB results:</td>
+		<td><spring:message code="haitimobileclinic.tbResults"/>:</td>
 		<td><formAccess:accessFromDashboard patientId='${patientId}' formId='4'/></td>
 	</tr>
 </table>

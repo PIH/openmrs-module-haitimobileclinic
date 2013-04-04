@@ -45,14 +45,17 @@ public class FormAccessFromDashboardTag extends TagSupport {
 	public int doStartTag() throws JspException {
 		JspWriter o = pageContext.getOut();
 		try {
-			o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?personId=" + getPatientId() + "&patientId=" + getPatientId() +"&returnUrl=&formId=" + getFormId() + "'>Enter new</a><br/>");
+			String enterNew = Context.getMessageSourceService().getMessage("haitimobileclinic.enterNew");
+			o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?personId=" + getPatientId() + "&patientId=" + getPatientId() +"&returnUrl=&formId=" + getFormId() + "'>" + enterNew + "</a><br/>");
 			DateFormat df = new SimpleDateFormat(HaitiMobileClinicConstants.DATE_FORMAT_DISPLAY, Context.getLocale());
 			List<Encounter> encounters = Context.getEncounterService().getEncounters(Context.getPatientService().getPatient(Integer.parseInt(getPatientId())), null, null, null, Arrays.asList(Context.getFormService().getForm(Integer.parseInt(getFormId()))), null, false);
 			// get the last 3 encounters
 			if (encounters.size() == 0) {
-				o.write("No previous encounters yet");
+				String noPrevious = Context.getMessageSourceService().getMessage("haitimobileclinic.noPreviousEncountersYet");
+				o.write(noPrevious);
 			} else {
-				o.write("Previous: ");
+				String previous = Context.getMessageSourceService().getMessage("haitimobileclinic.previous");
+				o.write(previous + ": ");
 				int startIndex = 0;
 				if (encounters.size() > 3) {
 					startIndex = encounters.size() - 3;
@@ -62,7 +65,8 @@ public class FormAccessFromDashboardTag extends TagSupport {
 					o.write("<a href='/openmrs/module/htmlformentry/htmlFormEntry.form?encounterId=" + e.getId() + "'>" + df.format(e.getEncounterDatetime()) + "</a> ");
 				}
 				if (encounters.size() > 3) {
-					o.write(" (see Encounters tab to show all)");
+					String seeEncountersTab = Context.getMessageSourceService().getMessage("haitimobileclinic.seeEncountersTab");
+					o.write(" " + seeEncountersTab);
 				}
 			}
 		} catch (Exception e) {

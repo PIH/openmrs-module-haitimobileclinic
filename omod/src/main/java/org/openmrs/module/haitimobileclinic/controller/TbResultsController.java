@@ -48,13 +48,6 @@ public class TbResultsController {
 		if (!HaitiMobileClinicWebUtil.hasDefaultsBeenSet())
 			return new ModelAndView("redirect:/module/haitimobileclinic/dataEntryDefaults.form"); 
 
-		Location loc = null;
-		if (locationId == null || "".equals(locationId)) {
-			loc = Context.getLocationService().getLocation(Integer.parseInt(Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION)));
-		} else {
-			loc = Context.getLocationService().getLocation(locationId);
-		}
-
 		Set<Integer> patientIds = LookupHelper.patientIdsWithPendingReferrals("tb", toDate);
 		
 //		Cohort cohort = Context.getPatientSetService().getAllPatients();

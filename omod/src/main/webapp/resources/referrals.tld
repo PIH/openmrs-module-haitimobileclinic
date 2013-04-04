@@ -104,8 +104,8 @@
 
 	<tag>
 		<description></description>
-		<name>necName</name>
-		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.NecNameTag</tag-class>
+		<name>necNames</name>
+		<tag-class>org.openmrs.module.haitimobileclinic.web.taglib.NecNamesTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>referralEncounterId</name>

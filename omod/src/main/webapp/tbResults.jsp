@@ -38,7 +38,7 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 									<th>Name</th>
 									<th>Site</th>
 									<th>CHW names</th>
-									<th>NEC name</th>
+									<th>NEC names</th>
 									<th>Screening visit</th>
 									<th>Age</th>
 									<th>TB Results and status</th>
@@ -66,7 +66,7 @@ function save(fieldToUpdate, tbSuspectEncounterId, sputumResult1, sputumResult1D
 										<td><referrals:patientName patientId="${patientId}" /></td>
 										<td><referrals:site referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:chwNames referralEncounterId="${tbSuspectEncounterId}"/></td>
-										<td><referrals:necName referralEncounterId="${tbSuspectEncounterId}" /></td>
+										<td><referrals:necNames referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${tbSuspectEncounterId}" /></td>
 										<td><referrals:age patientId="${patientId}" /></td>
 										<td><span id='span-${patientId}'><tbSuspect:tbResultAndStatus tbSuspectEncounterId="${tbSuspectEncounterId}" /></span></td>

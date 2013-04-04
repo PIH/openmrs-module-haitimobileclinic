@@ -43,7 +43,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 									<th>Site</th>
 									<!-- <th>Reason for referral</th>-->
 									<th>CHW names</th>
-									<th>NEC name</th>
+									<th>NEC names</th>
 									<th>Mobile Visit date</th>
 									<th>Static Visit date</th>
 								</tr>
@@ -70,7 +70,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 										<td><referrals:site referralEncounterId="${referralEncounterId}" /></td>
 										<!-- <td><referrals:referralReason referralEncounterId="${referralEncounterId}" /></td>-->
 										<td><referrals:chwNames referralEncounterId="${referralEncounterId}"/></td>
-										<td><referrals:necName referralEncounterId="${referralEncounterId}" /></td>
+										<td><referrals:necNames referralEncounterId="${referralEncounterId}" /></td>
 										<td><referrals:mobileVisitDate referralEncounterId="${referralEncounterId}" /></td>
 										<td>
 											<span id='enrollmentSpan-${referralEncounterId}'>

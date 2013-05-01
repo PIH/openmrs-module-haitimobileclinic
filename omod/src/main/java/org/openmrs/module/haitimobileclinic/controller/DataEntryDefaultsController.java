@@ -3,6 +3,7 @@ package org.openmrs.module.haitimobileclinic.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-@SessionAttributes({ "sessionDate", "sessionLocation", "sessionLocationAddressHierarchyId", "sessionCoordinates", "sessionStaticLocation",
+@SessionAttributes({ "sessionDate", "sessionLocation", "sessionLocationAddressHierarchyId", "sessionCoordinates", "sessionCoordinatesNorth", "sessionCoordinatesWest", "sessionStaticLocation",
 	"sessionStaticLocationName", "sessionChwName1", "sessionChwName2", "sessionChwName3", "sessionNecName1", "sessionNecName2" })
 @Controller
 public class DataEntryDefaultsController {
@@ -39,7 +40,8 @@ public class DataEntryDefaultsController {
 			@RequestParam(required = false) String cityVillage, 
 			@RequestParam(required = false) String address3,
 			@RequestParam(required = false) String address1,
-			@RequestParam String sessionCoordinates,
+			@RequestParam String sessionCoordinatesNorth,
+			@RequestParam String sessionCoordinatesWest,
 			@RequestParam String sessionStaticLocation,
 			@RequestParam String sessionStaticLocationName,
 			@RequestParam String sessionChwName1,
@@ -58,7 +60,11 @@ public class DataEntryDefaultsController {
 		AddressHierarchyEntry entry = findAddressHierarchyEntry(country, stateProvince, cityVillage, address3, address1);
 		model.addAttribute("sessionLocationAddressHierarchyId", entry == null ? "<not found>" : entry.getId());
 		
-		model.addAttribute("sessionCoordinates", sessionCoordinates);
+		model.addAttribute("sessionCoordinatesNorth", sessionCoordinatesNorth);
+		model.addAttribute("sessionCoordinatesWest", sessionCoordinatesWest);
+		String coordinates = StringUtils.isNotBlank(sessionCoordinatesNorth) ? "N -" + sessionCoordinatesNorth : "N <not set>";
+		coordinates += " | W " + (StringUtils.isNotBlank(sessionCoordinatesWest) ? sessionCoordinatesWest : "<not set>");
+		model.addAttribute("sessionCoordinates", coordinates);
 		model.addAttribute("sessionStaticLocationName", sessionStaticLocationName);
 		model.addAttribute("sessionStaticLocation", sessionStaticLocation);
 		model.addAttribute("sessionChwName1", sessionChwName1);

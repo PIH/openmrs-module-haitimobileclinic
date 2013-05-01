@@ -108,8 +108,10 @@
 			</tr>
 			<tr>
 				<td><spring:message code="haitimobileclinic.gpsCoordinates"/>:</td>c
-				<td><input type="text" name="sessionCoordinates"
-					id="sessionCoordinates" size="25" value="${sessionCoordinates}" /></td>
+				<td>N -<input type="text" name="sessionCoordinatesNorth"
+					id="sessionCoordinatesNorth" size="8" value="${sessionCoordinatesNorth}" />
+					W <input type="text" name="sessionCoordinatesWest"
+					id="sessionCoordinatesWest" size="8" value="${sessionCoordinatesWest}" /></td>
 			</tr>
 			<tr>
 				<td><spring:message code="haitimobileclinic.chwNames3"/>:</td>

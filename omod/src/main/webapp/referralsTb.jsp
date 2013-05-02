@@ -92,8 +92,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 	<br>
 	&nbsp;
 	<br>
-	For TB:
-	Only patients with pending referrals and a confirmed BT status are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and confirm the <a href="/openmrs/module/haitimobileclinic/tbResults.form">TB status</a> for this patient.  
+	<spring:message code="haitimobileclinic.referralsTbNote"/>
 </div>
 
 <br>

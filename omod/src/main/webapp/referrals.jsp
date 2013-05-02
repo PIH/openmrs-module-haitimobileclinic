@@ -93,8 +93,7 @@ function enroll(fieldToUpdate, referralEncounter, enrollmentDate, enrollmentReas
 	<br>
 	&nbsp;
 	<br>
-	For HIV and Malnutrition:
-	Only patients with pending referrals are listed. If a patient is missing, <a href="/openmrs/findPatient.htm">Find the patient</a> and check the referral section of the last Mobile Clinic Consultation Sheet(s) and make sure the patient is not yet enrolled with a matching Static Clinic Enrollment.
+	<spring:message code="haitimobileclinic.referralsHivMalnutritionNote"/>
 </div>
 
 <br>

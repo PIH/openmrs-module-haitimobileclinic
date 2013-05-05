@@ -62,8 +62,9 @@ public class DataEntryDefaultsController {
 		
 		model.addAttribute("sessionCoordinatesNorth", sessionCoordinatesNorth);
 		model.addAttribute("sessionCoordinatesWest", sessionCoordinatesWest);
-		String coordinates = StringUtils.isNotBlank(sessionCoordinatesNorth) ? "N -" + sessionCoordinatesNorth : "N <not set>";
-		coordinates += " | W " + (StringUtils.isNotBlank(sessionCoordinatesWest) ? sessionCoordinatesWest : "<not set>");
+		String coordinates = StringUtils.isNotBlank(sessionCoordinatesNorth) ? "N " + sessionCoordinatesNorth : "N <not set>";
+		String coordinateWest = StringUtils.isNotBlank(sessionCoordinatesWest) ? sessionCoordinatesWest : "<not set>";
+		coordinates += ", W " + (coordinateWest.startsWith("-") ? "" : "-") + coordinateWest;
 		model.addAttribute("sessionCoordinates", coordinates);
 		model.addAttribute("sessionStaticLocationName", sessionStaticLocationName);
 		model.addAttribute("sessionStaticLocation", sessionStaticLocation);

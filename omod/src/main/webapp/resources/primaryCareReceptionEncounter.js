@@ -53,57 +53,62 @@ $j(document).ready(function(){
         return returnObject;
     };
 	
+    var alreadySubmitted = false;
+    
     function submitData(){
-        var obsList='[';
-        var firstItem = true;
-        //submit the array of diagnosis to web controller
-        if(paymentGroupArray.length>0){
-            for(var j=0; j < paymentGroupArray.length; j++){
-                if(firstItem){
-                    obsList = obsList + "{";
-                    firstItem = false;
-                }else{
-                    obsList = obsList + ",{";
-                }
-                var paymentItem = new Object();
-                paymentItem = paymentGroupArray[j];
-                if(paymentItem.length>0){
-                    for(var i=0; i<paymentItem.length; i++){
-                        var obsItem = new Object();
-                        obsItem = paymentItem[i];
-                        var obsCode=obsItem.type;
-                        var codedId = obsItem.id;
-                        if (obsCode === NONCODED) {
-                            codedId = 0;
-                        }
-                        var obsItemLabel = obsItem.label;
-						if(obsItemLabel.length<1){
-							obsItemLabel =0;
-						}
-                        var obsId = parseInt(obsItem.obsId, 10);
-                        if (isNaN(obsId)){
-                            obsId = 0;
-                        }
-
-                        obsList =obsList + obsCode + ','
-                            + codedId + ','
-                            + obsItemLabel + ','
-                            + obsItem.conceptId + ','
-                            + obsId + ';';
-                    }
-                }
-                obsList = obsList + "}";
-            }
-            obsList = obsList + "]";
-            $j('#listOfObs').val(obsList);
-            $j('#hiddenEncounterYear').val(encounterYear);
-            $j('#hiddenEncounterMonth').val(encounterMonth);
-            $j('#hiddenEncounterDay').val(encounterDay);
-            if(nextTask.length>0){
-                $j('#hiddenNextTask').val(nextTask);
-            }
-            alertUserAboutLeaving = false;
-            $j('#obsForm').submit();
+    	if (!alreadySubmitted) {
+    		alreadySubmitted = true;
+	        var obsList='[';
+	        var firstItem = true;
+	        //submit the array of diagnosis to web controller
+	        if(paymentGroupArray.length>0){
+	            for(var j=0; j < paymentGroupArray.length; j++){
+	                if(firstItem){
+	                    obsList = obsList + "{";
+	                    firstItem = false;
+	                }else{
+	                    obsList = obsList + ",{";
+	                }
+	                var paymentItem = new Object();
+	                paymentItem = paymentGroupArray[j];
+	                if(paymentItem.length>0){
+	                    for(var i=0; i<paymentItem.length; i++){
+	                        var obsItem = new Object();
+	                        obsItem = paymentItem[i];
+	                        var obsCode=obsItem.type;
+	                        var codedId = obsItem.id;
+	                        if (obsCode === NONCODED) {
+	                            codedId = 0;
+	                        }
+	                        var obsItemLabel = obsItem.label;
+							if(obsItemLabel.length<1){
+								obsItemLabel =0;
+							}
+	                        var obsId = parseInt(obsItem.obsId, 10);
+	                        if (isNaN(obsId)){
+	                            obsId = 0;
+	                        }
+	
+	                        obsList =obsList + obsCode + ','
+	                            + codedId + ','
+	                            + obsItemLabel + ','
+	                            + obsItem.conceptId + ','
+	                            + obsId + ';';
+	                    }
+	                }
+	                obsList = obsList + "}";
+	            }
+	            obsList = obsList + "]";
+	            $j('#listOfObs').val(obsList);
+	            $j('#hiddenEncounterYear').val(encounterYear);
+	            $j('#hiddenEncounterMonth').val(encounterMonth);
+	            $j('#hiddenEncounterDay').val(encounterDay);
+	            if(nextTask.length>0){
+	                $j('#hiddenNextTask').val(nextTask);
+	            }
+	            alertUserAboutLeaving = false;
+	            $j('#obsForm').submit();
+	        }
         }
     }
 

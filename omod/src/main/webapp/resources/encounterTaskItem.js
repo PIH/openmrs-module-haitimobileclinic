@@ -68,10 +68,15 @@ $j(document).ready(function(){
 		}
 	});
 	
+	var alreadySubmitted = false;
+	
 	/** Handle the checkmark click event **/
 	$j('#checkmark-yellow').click(function() {
 		// submit the form
-		$j('#encounterTaskItemForm').submit();
+		if (!alreadySubmitted) {
+			alreadySubmitted = true;
+			$j('#encounterTaskItemForm').submit();
+		}
 	});
 	
 	/** Handle the red cross click event **/

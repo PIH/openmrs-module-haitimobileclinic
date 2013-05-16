@@ -35,40 +35,45 @@ $j(document).ready(function(){
         }
     };
 
+    var alreadySubmitted = false;
+    
     function submitData(){
-	    var obsList='';
-        for(var i=0; i < obsArray.length; i++){
-            var obsItem = new Object();
-            obsItem = obsArray[i];
-            var obsCode=obsItem.type;
-            var codedId = obsItem.id;
-            if (obsCode === NONCODED) {
-                codedId = 0;
-            }
-            var obsItemLabel = obsItem.label;
-			if(obsItemLabel.length<1){
-				obsItemLabel =0;
-			}
-            var obsId = parseInt(obsItem.obsId, 10);
-            if (isNaN(obsId)){
-                obsId = 0;
-            }
-
-            obsList =obsList + obsCode + ','
-                + codedId + ','
-                + obsItemLabel + ','
-                + obsItem.conceptId + ','
-                + obsId + ';';
-        }
-        $j('#listOfObs').val(obsList);
-        $j('#hiddenEncounterYear').val(encounterYear);
-        $j('#hiddenEncounterMonth').val(encounterMonth);
-        $j('#hiddenEncounterDay').val(encounterDay);
-        if(nextTask.length>0){
-            $j('#hiddenNextTask').val(nextTask);
-        }
-        alertUserAboutLeaving = false;
-        $j('#obsForm').submit();
+		if (!alreadySubmitted) {
+			alreadySubmitted = true;
+		    var obsList='';
+	        for(var i=0; i < obsArray.length; i++){
+	            var obsItem = new Object();
+	            obsItem = obsArray[i];
+	            var obsCode=obsItem.type;
+	            var codedId = obsItem.id;
+	            if (obsCode === NONCODED) {
+	                codedId = 0;
+	            }
+	            var obsItemLabel = obsItem.label;
+				if(obsItemLabel.length<1){
+					obsItemLabel =0;
+				}
+	            var obsId = parseInt(obsItem.obsId, 10);
+	            if (isNaN(obsId)){
+	                obsId = 0;
+	            }
+	
+	            obsList =obsList + obsCode + ','
+	                + codedId + ','
+	                + obsItemLabel + ','
+	                + obsItem.conceptId + ','
+	                + obsId + ';';
+	        }
+	        $j('#listOfObs').val(obsList);
+	        $j('#hiddenEncounterYear').val(encounterYear);
+	        $j('#hiddenEncounterMonth').val(encounterMonth);
+	        $j('#hiddenEncounterDay').val(encounterDay);
+	        if(nextTask.length>0){
+	            $j('#hiddenNextTask').val(nextTask);
+	        }
+	        alertUserAboutLeaving = false;
+	        $j('#obsForm').submit();
+    	}
     }
 
     var divItems = new Array("encounterDateDiv",

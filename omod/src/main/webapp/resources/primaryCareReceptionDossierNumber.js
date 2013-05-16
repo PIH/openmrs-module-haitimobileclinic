@@ -78,13 +78,18 @@ $j(document).ready(function(){
 		}
 		return true;
 	};
+
+	var alreadySubmitted = false;
 	
-	$j('#checkmark-yellow').click(function(event){			
-		if($j.validateDivData()){										
-			if(nextDiv !== null){								
-				$j.setupDiv(nextDiv);				
+	$j('#checkmark-yellow').click(function(event){
+		if (!alreadySubmitted) {
+			alreadySubmitted = true;
+			if($j.validateDivData()){										
+				if(nextDiv !== null){								
+					$j.setupDiv(nextDiv);				
+				}
+				 $j('#haitiMobileClinicEncounter').submit();
 			}
-			 $j('#haitiMobileClinicEncounter').submit();
 		}		
 	});
 	
